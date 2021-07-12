@@ -1,15 +1,15 @@
-package edu.mum.cs.cs525.labs.exercises.project.ui.bank;
+package miu.edu.cs.cs525.final_project.bank;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.*;
 
 /**
  * A basic JFC based application.
  */
-public class BankFrm extends javax.swing.JFrame
+public class BankFrm extends JFrame
 {
     /****
      * init variables in the object
@@ -27,7 +27,7 @@ public class BankFrm extends javax.swing.JFrame
 		myframe = this;
 
 		setTitle("Bank Application.");
-		setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0,0));
 		setSize(575,310);
 		setVisible(false);
@@ -124,13 +124,13 @@ public class BankFrm extends javax.swing.JFrame
 	}
 
 
-	javax.swing.JPanel JPanel1 = new javax.swing.JPanel();
-	javax.swing.JButton JButton_PerAC = new javax.swing.JButton();
-	javax.swing.JButton JButton_CompAC = new javax.swing.JButton();
-	javax.swing.JButton JButton_Deposit = new javax.swing.JButton();
-	javax.swing.JButton JButton_Withdraw = new javax.swing.JButton();
-	javax.swing.JButton JButton_Addinterest= new javax.swing.JButton();
-	javax.swing.JButton JButton_Exit = new javax.swing.JButton();
+	JPanel JPanel1 = new JPanel();
+	JButton JButton_PerAC = new JButton();
+	JButton JButton_CompAC = new JButton();
+	JButton JButton_Deposit = new JButton();
+	JButton JButton_Withdraw = new JButton();
+	JButton JButton_Addinterest= new JButton();
+	JButton JButton_Exit = new JButton();
 
 	void exitApplication()
 	{
@@ -144,7 +144,7 @@ public class BankFrm extends javax.swing.JFrame
 
 	class SymWindow extends java.awt.event.WindowAdapter
 	{
-		public void windowClosing(java.awt.event.WindowEvent event)
+		public void windowClosing(WindowEvent event)
 		{
 			Object object = event.getSource();
 			if (object == BankFrm.this)
@@ -152,14 +152,14 @@ public class BankFrm extends javax.swing.JFrame
 		}
 	}
 
-	void BankFrm_windowClosing(java.awt.event.WindowEvent event)
+	void BankFrm_windowClosing(WindowEvent event)
 	{
 		// to do: code goes here.
 			 
 		BankFrm_windowClosing_Interaction1(event);
 	}
 
-	void BankFrm_windowClosing_Interaction1(java.awt.event.WindowEvent event) {
+	void BankFrm_windowClosing_Interaction1(WindowEvent event) {
 		try {
 			this.exitApplication();
 		} catch (Exception e) {
@@ -168,7 +168,7 @@ public class BankFrm extends javax.swing.JFrame
 
 	class SymAction implements java.awt.event.ActionListener
 	{
-		public void actionPerformed(java.awt.event.ActionEvent event)
+		public void actionPerformed(ActionEvent event)
 		{
 			Object object = event.getSource();
 			if (object == JButton_Exit)
@@ -189,12 +189,12 @@ public class BankFrm extends javax.swing.JFrame
     
     //When the Exit button is pressed this code gets executed
     //this will exit from the system
-    void JButtonExit_actionPerformed(java.awt.event.ActionEvent event)
+    void JButtonExit_actionPerformed(ActionEvent event)
 	{
 		System.exit(0);
 	}
 
-	void JButtonPerAC_actionPerformed(java.awt.event.ActionEvent event)
+	void JButtonPerAC_actionPerformed(ActionEvent event)
 	{
 		/*
 		 JDialog_AddPAcc type object is for adding personal information
@@ -223,7 +223,7 @@ public class BankFrm extends javax.swing.JFrame
         
     }
 
-	void JButtonCompAC_actionPerformed(java.awt.event.ActionEvent event)
+	void JButtonCompAC_actionPerformed(ActionEvent event)
 	{
 		/*
 		 construct a JDialog_AddCompAcc type object 
@@ -250,7 +250,7 @@ public class BankFrm extends javax.swing.JFrame
 
 	}
 
-	void JButtonDeposit_actionPerformed(java.awt.event.ActionEvent event)
+	void JButtonDeposit_actionPerformed(ActionEvent event)
 	{
 	    // get selected name
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
@@ -273,7 +273,7 @@ public class BankFrm extends javax.swing.JFrame
 		
 	}
 
-	void JButtonWithdraw_actionPerformed(java.awt.event.ActionEvent event)
+	void JButtonWithdraw_actionPerformed(ActionEvent event)
 	{
 	    // get selected name
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
@@ -299,7 +299,7 @@ public class BankFrm extends javax.swing.JFrame
 		
 	}
 	
-	void JButtonAddinterest_actionPerformed(java.awt.event.ActionEvent event)
+	void JButtonAddinterest_actionPerformed(ActionEvent event)
 	{
 		  JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
 	    
