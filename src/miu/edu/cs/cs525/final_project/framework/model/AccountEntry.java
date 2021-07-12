@@ -7,7 +7,7 @@ public class AccountEntry {
     private double amount;
     private String description;
 
-    public AccountEntry() {
+    public AccountEntry(double amount, String withdraw, String s, String s1) {
     }
 
     public AccountEntry(double amount, String description) {

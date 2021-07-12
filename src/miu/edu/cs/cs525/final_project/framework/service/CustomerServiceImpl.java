@@ -12,7 +12,7 @@ public class CustomerServiceImpl implements CustomerService{
         this.customerDAO = customerDAO;
     }
     @Override
-    public Customer createCustomer(String name, String email, LocalDate localDate, String street, String state, String zip) {
+    public Customer createCustomer(String name, String email, LocalDate localDate) {
         return null;
     }
 

@@ -9,6 +9,6 @@ import java.util.Collection;
 public interface AccountDAO {
     void saveAccount(Account account);
     void updateAccount(Account account);
-    Account loadAccount(String accountnumber);
+    Account loadAccount(long accountnumber);
     Collection<Account> getAccounts();
 }
