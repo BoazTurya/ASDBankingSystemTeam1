@@ -1,12 +1,8 @@
-package edu.mum.cs.cs525.labs.exercises.project.ui.ccard;
+package miu.edu.cs.cs525.final_project.ccard;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 /**
  * A basic JFC based application.
