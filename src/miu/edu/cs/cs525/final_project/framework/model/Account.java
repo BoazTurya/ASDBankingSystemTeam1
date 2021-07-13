@@ -27,7 +27,6 @@ public abstract class Account {
     public String getAccountNumber() {
         return accountNumber;
     }
-
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
@@ -35,12 +34,44 @@ public abstract class Account {
     public Collection<AccountEntry> getAccountEntry() {
         return accountEntries;
     }
-
     public void addAccountEntry(AccountEntry accountEntry) {
         this.accountEntries.add(accountEntry);
     }
 
-    public double getBalance(){
-        return 0;
+    public Customer getCustomer() {
+        return customer;
     }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public InterestStrategy getInterestStrategy() {
+        return interestStrategy;
+    }
+
+    public void setInterestStrategy(InterestStrategy interestStrategy) {
+        this.interestStrategy = interestStrategy;
+    }
+
+    public AlertStrategy getAlertStrategy() {
+        return alertStrategy;
+    }
+
+    public void setAlertStrategy(AlertStrategy alertStrategy) {
+        this.alertStrategy = alertStrategy;
+    }
+
+    public PaymentStrategy getPaymentStrategy() {
+        return paymentStrategy;
+    }
+
+    public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
+        this.paymentStrategy = paymentStrategy;
+    }
+
+    public double getBalance(){
+        return this.accountEntries.stream().mapToDouble(AccountEntry::getAmount).sum();
+    }
+
 }
