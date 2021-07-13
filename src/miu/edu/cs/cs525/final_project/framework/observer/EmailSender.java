@@ -21,4 +21,5 @@ public class EmailSender implements Observer {
         }
         return Instance;
     }
+
 }

@@ -1,18 +1,26 @@
 package miu.edu.cs.cs525.final_project.framework.model;
 
+import miu.edu.cs.cs525.final_project.framework.strategy.AlertStrategy;
+import miu.edu.cs.cs525.final_project.framework.strategy.InterestStrategy;
+import miu.edu.cs.cs525.final_project.framework.strategy.PaymentStrategy;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 public abstract class Account {
     private String accountNumber;
     private Customer customer;
-    private AccountStrategy accountStrategy;
+    private InterestStrategy interestStrategy;
+    private AlertStrategy alertStrategy;
+    private PaymentStrategy paymentStrategy;
     private Collection<AccountEntry> accountEntries;
 
-    public Account(String accountNumber, Customer customer,AccountStrategy accountStrategy) {
+    public Account(String accountNumber, Customer customer, InterestStrategy accountStrategy,AlertStrategy alertStrategy,PaymentStrategy paymentStrategy) {
         this.accountNumber = accountNumber;
         this.customer = customer;
-        this.accountStrategy = accountStrategy;
+        this.interestStrategy = accountStrategy;
+        this.alertStrategy = alertStrategy;
+        this.paymentStrategy = paymentStrategy;
         accountEntries = new ArrayList<>();
     }
 
