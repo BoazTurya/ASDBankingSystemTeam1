@@ -17,10 +17,22 @@ public abstract class Customer {
         accounts = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email){
+        this.email = email;
+    }
+
     public Collection<Account> getAccounts() {
         return accounts;
     }
-
     public void addAccount(Account account) {
         this.accounts.add(account);
     }
@@ -28,7 +40,6 @@ public abstract class Customer {
     public Address getAddress() {
         return address;
     }
-
     public void setAddress(Address address) {
         this.address = address;
     }

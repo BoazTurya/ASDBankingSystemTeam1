@@ -12,7 +12,6 @@ public class Organization extends Customer {
         this.numberOfEmployees = numberOfEmployees;
     }
 
-
     public void addEmployee(Person employee){
         employeeList.add(employee);
     }
