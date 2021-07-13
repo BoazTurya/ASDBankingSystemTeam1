@@ -9,9 +9,10 @@ public abstract class Account {
     private AccountStrategy accountStrategy;
     private Collection<AccountEntry> accountEntries;
 
-    public Account(String accountNumber, Customer customer) {
+    public Account(String accountNumber, Customer customer,AccountStrategy accountStrategy) {
         this.accountNumber = accountNumber;
         this.customer = customer;
+        this.accountStrategy = accountStrategy;
         accountEntries = new ArrayList<>();
     }
 
@@ -29,5 +30,9 @@ public abstract class Account {
 
     public void addAccountEntry(AccountEntry accountEntry) {
         this.accountEntries.add(accountEntry);
+    }
+
+    public double getBalance(){
+        return 0;
     }
 }

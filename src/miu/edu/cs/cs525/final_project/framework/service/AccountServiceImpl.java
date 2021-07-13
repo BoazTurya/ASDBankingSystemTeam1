@@ -6,10 +6,13 @@ import miu.edu.cs.cs525.final_project.framework.dao.CustomerDAO;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.model.AccountEntry;
 import miu.edu.cs.cs525.final_project.framework.model.Customer;
+import miu.edu.cs.cs525.final_project.framework.observer.EmailSender;
+import miu.edu.cs.cs525.final_project.framework.observer.Logger;
+import miu.edu.cs.cs525.final_project.framework.observer.Subject;
 
 import java.time.LocalDate;
 
-public abstract class AccountServiceImpl implements AccountService{
+public abstract class AccountServiceImpl extends Subject implements AccountService {
     private AccountDAO accountDAO;
     private CustomerDAO customerDAO;
     private CustomerService customerService;
@@ -18,36 +21,46 @@ public abstract class AccountServiceImpl implements AccountService{
         this.accountDAO = accountDAO;
         this.customerDAO = customerDAO;
         this.customerService = customerService;
+
+        this.addObserver(Logger.getInstance());
+        this.addObserver(EmailSender.getInstance());
     }
 
     @Override
-    public final Account createAccountTemplate(String accountNumber, String name, String email,String street, String city, String state, String zip, String accountType,String... args) {
-        Customer customer = customerService.createCustomer(name,email,street,city,state,zip);
-        Account account = createAccount(accountNumber,customer, accountType,args);
+    public final Account createPersonalAccount(String accountNumber, String name, String email, String street, String city, String state, String zip, LocalDate dob, String accountType) {
+        Customer customer = customerService.createPerson(name,email,street,city,state,zip,dob);
+        Account account = createAccount(accountNumber,customer, accountType);
         accountDAO.saveAccount(account);
-        return account;
-    }
+        return account;}
 
     @Override
-    public Account getAccount(String accountNumber) {
+    public final Account createOrganizationAccount(String accountNumber, String name, String email, String street, String city, String state, String zip, int numberOfEmployees, String accountType) {
+        Customer customer = customerService.createOrganization(name,email,street,city,state,zip,numberOfEmployees);
+        Account account = createAccount(accountNumber,customer, accountType);
+        accountDAO.saveAccount(account);
+        return account;}
+
+    @Override
+    public final Account getAccount(String accountNumber) {
         return accountDAO.loadAccount(accountNumber);
     }
 
     @Override
-    public void deposit(String accountNumber, double amount) {
+    public final void deposit(String accountNumber, double amount) {
         Account account = accountDAO.loadAccount(accountNumber);
         AccountEntry accountEntry = new AccountEntry(amount,"deposit");
         account.addAccountEntry(accountEntry);
         accountDAO.updateAccount(account);
+        this.notifyAllObservers(account);
     }
 
     @Override
-    public void withdraw(String accountNumber, double amount) {
+    public final void withdraw(String accountNumber, double amount) {
         Account account = accountDAO.loadAccount(accountNumber);
         AccountEntry accountEntry = new AccountEntry(-amount,"withdraw");
         account.addAccountEntry(accountEntry);
-        accountDAO.updateAccount(account);
-    }
+        accountDAO.updateAccount(account);}
 
-    public abstract Account createAccount(String accountNumber, Customer customer,String accountType,String... args);
+
+    public abstract Account createAccount(String accountNumber, Customer customer, String accountType);
 }
