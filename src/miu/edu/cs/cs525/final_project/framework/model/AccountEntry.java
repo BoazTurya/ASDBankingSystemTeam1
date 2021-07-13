@@ -7,9 +7,6 @@ public class AccountEntry {
     private double amount;
     private String description;
 
-    public AccountEntry() {
-    }
-
     public AccountEntry(double amount, String description) {
         super();
         this.date = new Date();
