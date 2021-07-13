@@ -1,10 +1,13 @@
 package miu.edu.cs.cs525.final_project.bank;
 
 import javax.swing.*;
+
+import miu.edu.cs.cs525.final_project.framework.ui.AddAccountDialog;
+
 import java.awt.*;
 
 
-public class JDialog_AddCompAcc extends JDialog
+public class JDialog_AddCompAcc extends AddAccountDialog
 {
     private BankFrm parentframe;
     
@@ -137,15 +140,15 @@ public class JDialog_AddCompAcc extends JDialog
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
        parentframe.accountnr=JTextField_ACNR.getText();
-       parentframe.clientName=JTextField_NAME.getText();
-       parentframe.street=JTextField_STR.getText();
-       parentframe.city=JTextField_CT.getText();
-       parentframe.zip=JTextField_ZIP.getText();
-       parentframe.state=JTextField_ST.getText();
+       parentframe.setClientName(JTextField_NAME.getText());
+       parentframe.setStreet(JTextField_STR.getText());
+       parentframe.setCity(JTextField_CT.getText());
+       parentframe.setZip(JTextField_ZIP.getText());
+       parentframe.setState(JTextField_ST.getText());
        if (JRadioButton_Chk.isSelected())
-           parentframe.accountType="Ch";
+           parentframe.setAccountType("Ch");
            else
-           parentframe.accountType="S";
+           parentframe.setAccountType("S");
 	   parentframe.newaccount=true;
 	   dispose();
 			 
