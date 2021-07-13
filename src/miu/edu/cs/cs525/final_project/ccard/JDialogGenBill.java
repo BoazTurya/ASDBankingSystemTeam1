@@ -3,8 +3,13 @@ package miu.edu.cs.cs525.final_project.ccard;
 		A basic implementation of the JDialog class.
 */
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 public class JDialogGenBill extends JDialog
 {
@@ -23,6 +28,13 @@ public class JDialogGenBill extends JDialog
 		getContentPane().setLayout(null);
 		setSize(405,367);
 		setVisible(false);
+		setBounds(450, 20, 400, 350);
+		show();
+
+		JScrollPane JScrollPane1 = new JScrollPane();
+		JTextField JTextField1 = new JTextField();
+		JButton JButton_OK = new JButton();
+	
 		getContentPane().add(JScrollPane1);
 		JScrollPane1.setBounds(24,24,358,240);
 		JScrollPane1.getViewport().add(JTextField1);
@@ -57,8 +69,7 @@ public class JDialogGenBill extends JDialog
 		//}}
 	
 		//{{REGISTER_LISTENERS
-		SymAction lSymAction = new SymAction();
-		JButton_OK.addActionListener(lSymAction);
+		JButton_OK.addActionListener((ActionEvent evt)->dispose());
 		//}}
 	}
 
@@ -67,28 +78,4 @@ public class JDialogGenBill extends JDialog
 		this((Frame)null);
 	}
 
-
-
-	//{{DECLARE_CONTROLS
-	JScrollPane JScrollPane1 = new JScrollPane();
-	JTextField JTextField1 = new JTextField();
-	JButton JButton_OK = new JButton();
-	//}}
-
-
-	class SymAction implements java.awt.event.ActionListener
-	{
-		public void actionPerformed(java.awt.event.ActionEvent event)
-		{
-			Object object = event.getSource();
-			if (object == JButton_OK)
-				JButtonOK_actionPerformed(event);
-		}
-	}
-
-	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
-	{
-		dispose();
-			 
-	}
 }

@@ -1,10 +1,13 @@
 package miu.edu.cs.cs525.final_project.bank;
 
 import javax.swing.*;
+
+import miu.edu.cs.cs525.final_project.framework.ui.WithdrawDialog;
+
 import java.awt.*;
 
 
-public class JDialog_Withdraw extends JDialog
+public class JDialog_Withdraw extends WithdrawDialog
 {
    
     private BankFrm parentframe;
@@ -40,56 +43,14 @@ public class JDialog_Withdraw extends JDialog
 		JTextField_NAME.setBounds(84,12,156,20);
 		getContentPane().add(JTextField_AMT);
 		JTextField_AMT.setBounds(84,36,156,20);
-		JButton_OK.setText("OK");
-		JButton_OK.setActionCommand("OK");
-		getContentPane().add(JButton_OK);
-		JButton_OK.setBounds(48,84,84,24);
-		JButton_Calcel.setText("Cancel");
-		JButton_Calcel.setActionCommand("Cancel");
-		getContentPane().add(JButton_Calcel);
-		JButton_Calcel.setBounds(156,84,84,24);
-		
-	    JTextField_NAME.setText(accnr);
 	
-		
-		SymAction lSymAction = new SymAction();
-		JButton_OK.addActionListener(lSymAction);
-		JButton_Calcel.addActionListener(lSymAction);
-		
+	    JTextField_NAME.setText(accnr);
 	}
 
-
-
-	
 	JLabel JLabel1 = new JLabel();
 	JLabel JLabel2 = new JLabel();
 	JTextField JTextField_NAME = new JTextField();
 	JTextField JTextField_AMT = new JTextField();
 	JButton JButton_OK = new JButton();
-	JButton JButton_Calcel = new JButton();
-
-
-
-	class SymAction implements java.awt.event.ActionListener
-	{
-		public void actionPerformed(java.awt.event.ActionEvent event)
-		{
-			Object object = event.getSource();
-			if (object == JButton_OK)
-				JButtonOK_actionPerformed(event);
-			else if (object == JButton_Calcel)
-				JButtonCalcel_actionPerformed(event);
-		}
-	}
-
-	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
-	{
-        parentframe.amountDeposit=JTextField_AMT.getText();
-		dispose();
-	}
-
-	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)
-	{
-		dispose();
-	}
+	JButton JButton_Cancel = new JButton();
 }
