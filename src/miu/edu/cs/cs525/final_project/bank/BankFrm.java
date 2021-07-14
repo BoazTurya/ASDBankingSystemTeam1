@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import miu.edu.cs.cs525.final_project.framework.ui.DepositDialog;
+import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.actions.DepositAction;
 import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
@@ -18,14 +19,16 @@ import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
 public class BankFrm extends Form
 {
 	String accountnr, clientType;
+	
 	boolean newaccount;
 
-	JButton JButton_PerAC = new JButton("Add personal account");
-	JButton JButton_CompAC = new JButton("Add company account");
-	JButton JButton_Addinterest= new JButton("Add interest");
+	FrameButton JButton_PerAC = new FrameButton("Add personal account");
+	FrameButton JButton_CompAC = new FrameButton("Add company account");
+	FrameButton JButton_Addinterest= new FrameButton("Add interest");
 
 	public BankFrm()
 	{
+		super();
 		super.setThisFrame(this);
 		setTitle("Bank Application.");
 
@@ -40,24 +43,20 @@ public class BankFrm extends Form
 		newaccount=false;
 
 		JPanel1.add(JButton_PerAC);
-		JButton_PerAC.setBounds(24,20,192,33);
-		JButton_CompAC.setActionCommand("jbutton");
-
 		JPanel1.add(JButton_CompAC);
-		JButton_CompAC.setBounds(240,20,192,33);
-
-		JButton_Addinterest.setBounds(448,20,106,33);
 		JPanel1.add(JButton_Addinterest);
-		JButton_Withdraw.setBounds(468,164,96,33);
 		
 		JButton_PerAC.setActionCommand("jbutton");
-
+		JButton_PerAC.setBounds(24,20,192,33);
+		JButton_CompAC.setActionCommand("jbutton");
+		JButton_CompAC.setBounds(240,20,192,33);
+		JButton_Addinterest.setBounds(448,20,106,33);
+		JButton_Withdraw.setBounds(468,164,96,33);
+		
 		JButton_Deposit.addActionListener(new JButtonDepositAction());
 		JButton_Withdraw.addActionListener(new JButtonWithdrawAction());
-		
 		JButton_PerAC.addActionListener(new JButtonPerAC_Action());
 		JButton_CompAC.addActionListener(new JButtonCompAC_Action());
-
 		JButton_Addinterest.addActionListener(new AddInterestAction());
 
 	}
@@ -138,7 +137,7 @@ public class BankFrm extends Form
 	}
 
 	class JButtonDepositAction extends DepositAction{
-		public void actionPerformed(ActionEvent event) {
+			public void actionPerformed(ActionEvent event) {
 			// get selected name
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 			if (selection >=0){
@@ -186,8 +185,21 @@ public class BankFrm extends Form
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
+			
+			/*
+			 * 
+			 * to do
+			 */
 		}
 
+	}
+	public String getAccountnr() {
+		return accountnr;
+	}
+
+
+	public void setAccountnr(String accountnr) {
+		this.accountnr = accountnr;
 	}
 }
 

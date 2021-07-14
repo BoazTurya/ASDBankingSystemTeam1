@@ -45,6 +45,8 @@ public class CardFrm extends Form
 		JButton_NewCCAccount.addActionListener(new JButtonNewCC_Action());
 		JButton_GenBill.addActionListener((ActionEvent event)
 				->{JDialogGenBill billFrm = new JDialogGenBill();});
+		JButton_Deposit.addActionListener(new JButtonDepositAction());
+		JButton_Withdraw.addActionListener(new JButtonWithdrawAction());
 
 	}
 	/*****************************************************
@@ -73,8 +75,18 @@ public class CardFrm extends Form
 			System.exit(1);
 		}
 	}
-
-
+	public String getExpdate() {
+		return expdate;
+	}
+	public void setExpdate(String expdate) {
+		this.expdate = expdate;
+	}
+	public String getCcnumber() {
+		return ccnumber;
+	}
+	public void setCcnumber(String ccnumber) {
+		this.ccnumber = ccnumber;
+	}
 	class JButtonNewCC_Action implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			/*
@@ -101,31 +113,9 @@ public class CardFrm extends Form
 		}
 	}
 
+	/**/
 
-	void JButtonDeposit_actionPerformed(java.awt.event.ActionEvent event)
-	{
-		// get selected name
-		int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-		if (selection >=0){
-			String name = (String)model.getValueAt(selection, 0);
-
-			//Show the dialog for adding deposit amount for the current mane
-			JDialog_Deposit dep = new JDialog_Deposit(getThisFrame(),name);
-			dep.setBounds(430, 15, 275, 140);
-			dep.show();
-
-			// compute new amount
-			long deposit = Long.parseLong(getAmountDeposit());
-			String samount = (String)model.getValueAt(selection, 4);
-			long currentamount = Long.parseLong(samount);
-			long newamount=currentamount+deposit;
-			model.setValueAt(String.valueOf(newamount),selection, 4);
-		}
-
-
-	}
-
-	class JButtonWithdraw extends WithdrawAction{
+	class JButtonWithdrawAction extends WithdrawAction{
 		public void actionPerformed(ActionEvent evt) {
 			// get selected name
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
@@ -167,33 +157,12 @@ public class CardFrm extends Form
 				long currentamount = Long.parseLong(samount);
 				long newamount=currentamount+deposit;
 				model.setValueAt(String.valueOf(newamount),selection, 5);
-			}
+			}			
+			
+			
 		}
 	}
 
-	class JButtonWithdrawAction implements ActionListener{
-		public void actionPerformed(ActionEvent event){
-			// get selected name
-			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-			if (selection >=0){
-
-				//Show the dialog for adding withdraw amount for the current mane
-				WithdrawDialog wd = new WithdrawDialog(thisFrame);
-				wd.setBounds(430, 15, 275, 140);
-				wd.show();
-
-				// compute new amount
-				long deposit = Long.parseLong(getAmountDeposit());
-				String samount = (String)model.getValueAt(selection, 5);
-				long currentamount = Long.parseLong(samount);
-				long newamount=currentamount-deposit;
-				model.setValueAt(String.valueOf(newamount),selection, 5);
-				//			if (newamount <0){
-				//				JOptionPane.showMessageDialog(JButton_Withdraw, " Account "+accnr+" : balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
-				//			}
-			}
-		}
-	}
 }
 
 
