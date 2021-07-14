@@ -21,7 +21,7 @@ public class UIControllerImpl implements UIController {
 	}
 	@Override
 	public void deposit(String number, double amount) {
-		// accountService.deposit(number, amount);
+		//accountService.deposit(number, amount);
 		System.out.println("Calling backend: Deposit"+amount+" Account "+number);
 		
 	}
