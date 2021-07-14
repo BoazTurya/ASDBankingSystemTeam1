@@ -8,7 +8,10 @@ public class BankAccountFactory extends AccountFactory {
     @Override
     public Account createAccount(String accountNumber, Customer customer, String accountType) {
         if(accountType == "saving"){
-            account =  new SavingAccount(accountNumber,customer,new InterestStrategyA(),new AlertStrategyA(),new PaymentStrategyA());
+            account =  new BankAccount(accountNumber,customer,new InterestStrategyA(),new AlertStrategyA(),new PaymentStrategyA());
+        }
+        else if(accountType == "checking"){
+            account = new BankAccount(accountNumber,customer,new InterestStrategyA(),new AlertStrategyA(),new PaymentStrategyA());
         }
         return account;
     }

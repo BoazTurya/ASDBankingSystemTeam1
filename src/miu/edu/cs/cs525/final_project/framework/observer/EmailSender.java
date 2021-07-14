@@ -3,7 +3,9 @@ package miu.edu.cs.cs525.final_project.framework.observer;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.model.AccountEntry;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class EmailSender implements Observer {
@@ -12,10 +14,10 @@ public class EmailSender implements Observer {
 
     @Override
     public void update(Account account) {
-        Collection<AccountEntry> accountEntries = account.getAccountEntry();
+        List<AccountEntry> accountEntries = account.getAccountEntries().stream().toList();
         double alertLimit = account.getAlertStrategy().alertAmount();
         int entry_length = accountEntries.size();
-        double lastAmount = accountEntries.stream().collect(Collectors.toList()).get(entry_length).getAmount();
+        double lastAmount = accountEntries.get(entry_length-1).getAmount();
 
         if (lastAmount > alertLimit) {
            String  email = account.getCustomer().getEmail();

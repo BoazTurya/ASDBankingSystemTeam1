@@ -31,7 +31,7 @@ public abstract class Account {
         this.accountNumber = accountNumber;
     }
 
-    public Collection<AccountEntry> getAccountEntry() {
+    public Collection<AccountEntry> getAccountEntries() {
         return accountEntries;
     }
     public void addAccountEntry(AccountEntry accountEntry) {
