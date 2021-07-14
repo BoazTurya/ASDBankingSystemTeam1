@@ -2,19 +2,13 @@ package miu.edu.cs.cs525.final_project.framework.ui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-
-import miu.edu.cs.cs525.final_project.framework.ui.actions.DepositAction;
-import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
 
 public class Form extends JFrame{
 
@@ -36,9 +30,9 @@ public class Form extends JFrame{
 	protected Object rowdata[];
 
 	protected JPanel JPanel1 = new JPanel();
-	protected JButton JButton_Deposit = new JButton("Deposit");
-	protected JButton JButton_Withdraw = new JButton("Withdraw");
-	protected JButton JButton_Exit = new JButton("Exit");
+	protected FrameButton JButton_Deposit = new FrameButton("Deposit");
+	protected FrameButton JButton_Withdraw = new FrameButton("Withdraw");
+	protected FrameButton JButton_Exit = new FrameButton("Exit");
 
 	public Form()
 	{
