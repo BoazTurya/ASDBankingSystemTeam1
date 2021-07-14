@@ -157,7 +157,9 @@ public class CardFrm extends Form
 				long currentamount = Long.parseLong(samount);
 				long newamount=currentamount+deposit;
 				model.setValueAt(String.valueOf(newamount),selection, 5);
-			}
+			}			
+			
+			
 		}
 	}
 
