@@ -1,18 +1,16 @@
 package miu.edu.cs.cs525.final_project.framework.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class AccountEntry {
-    private Date date;
+    private LocalDate date;
     private double amount;
     private String description;
 
-    public AccountEntry() {
-    }
-
     public AccountEntry(double amount, String description) {
         super();
-        this.date = new Date();
+        this.date = LocalDate.now();
         this.amount = amount;
         this.description = description;
     }
@@ -25,11 +23,11 @@ public class AccountEntry {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -39,5 +37,14 @@ public class AccountEntry {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "[" +
+                "date=" + date +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ']';
     }
 }
