@@ -20,8 +20,6 @@ public class BankFrm extends Form
 {
 	String accountnr, clientType;
 	
-	boolean newaccount;
-
 	FrameButton JButton_PerAC = new FrameButton("Add personal account");
 	FrameButton JButton_CompAC = new FrameButton("Add company account");
 	FrameButton JButton_Addinterest= new FrameButton("Add interest");
@@ -32,12 +30,12 @@ public class BankFrm extends Form
 		super.setThisFrame(this);
 		setTitle("Bank Application.");
 
-		super.model.addColumn("AccountNr");
-		super.model.addColumn("Name");
-		super.model.addColumn("City");
-		super.model.addColumn("P/C");
-		super.model.addColumn("Ch/S");
-		super.model.addColumn("Amount");
+		super.getModel().addColumn("AccountNr");
+		super.getModel().addColumn("Name");
+		super.getModel().addColumn("City");
+		super.getModel().addColumn("P/C");
+		super.getModel().addColumn("Ch/S");
+		super.getModel().addColumn("Amount");
 		super.rowdata = new Object[8];
 
 		newaccount=false;
@@ -51,10 +49,10 @@ public class BankFrm extends Form
 		JButton_CompAC.setActionCommand("jbutton");
 		JButton_CompAC.setBounds(240,20,192,33);
 		JButton_Addinterest.setBounds(448,20,106,33);
-		JButton_Withdraw.setBounds(468,164,96,33);
+		getJButton_Withdraw().setBounds(468,164,96,33);
 		
-		JButton_Deposit.addActionListener(new JButtonDepositAction());
-		JButton_Withdraw.addActionListener(new JButtonWithdrawAction());
+		JButton_Deposit.addActionListener(new FormDepositButtonAction());
+		JButton_Withdraw.addActionListener(new FormWithdrawButtonAction());
 		JButton_PerAC.addActionListener(new JButtonPerAC_Action());
 		JButton_CompAC.addActionListener(new JButtonCompAC_Action());
 		JButton_Addinterest.addActionListener(new AddInterestAction(JButton_Addinterest));
@@ -89,25 +87,19 @@ public class BankFrm extends Form
 
 	class JButtonPerAC_Action implements ActionListener{
 		public void actionPerformed(ActionEvent evt) {
-			/*
-		 JDialog_AddPAcc type object is for adding personal information
-		 construct a JDialog_AddPAcc type object 
-		 set the boundaries and show it 
-			 */
-
 			JDialog_AddPAcc pac = new JDialog_AddPAcc((BankFrm) thisFrame);
 			pac.setBounds(450, 20, 300, 330);
 			pac.show();
 
 			if (newaccount){
 				// add row to table
-				rowdata[0] = accountnr;
-				rowdata[1] = getClientName();
-				rowdata[2] = getCity();
-				rowdata[3] = "P";
-				rowdata[4] = getAccountType();
-				rowdata[5] = "0";
-				model.addRow(rowdata);
+				rowdata[columnIndex++] = accountnr;
+				rowdata[columnIndex++] = getClientName();
+				rowdata[columnIndex++] = getCity();
+				rowdata[columnIndex++] = "P";
+				rowdata[columnIndex++] = getAccountType();
+				rowdata[columnIndex] = "0";
+				getModel().addRow(rowdata);
 				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 				newaccount=false;
 			}        
@@ -121,65 +113,32 @@ public class BankFrm extends Form
 			pac.show();
 			if (newaccount){
 				// add row to table
-				rowdata[0] = accountnr;
-				rowdata[1] = getClientName();
-				rowdata[2] = getCity();
-				rowdata[3] = "C";
-				rowdata[4] = getAccountType();
-				rowdata[5] = "0";
-				model.addRow(rowdata);
+				rowdata[columnIndex++] = accountnr;
+				rowdata[columnIndex++] = getClientName();
+				rowdata[columnIndex++] = getCity();
+				rowdata[columnIndex++] = "C";
+				rowdata[columnIndex++] = getAccountType();
+				rowdata[columnIndex] = "0";
+				getModel().addRow(rowdata);
 				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 				newaccount=false;
 			}
 		}
 	}
 
-	class JButtonDepositAction implements ActionListener{
-			public void actionPerformed(ActionEvent event) {
-			// get selected name
-			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-			if (selection >=0){
-				String accnr = (String)model.getValueAt(selection, 0);
-
-				//Show the dialog for adding deposit amount for the current mane
-				TransactionDialog dep = new BankDepositDialog(thisFrame,"deposit to your bank");
-
-				// compute new amount
-				long deposit = Long.parseLong(getAmountDeposit());
-				String samount = (String)model.getValueAt(selection, 5);
-				long currentamount = Long.parseLong(samount);
-				long newamount=currentamount+deposit;
-				model.setValueAt(String.valueOf(newamount),selection, 5);
-			}
-		}
-	}
-
-	class JButtonWithdrawAction extends WithdrawAction{
-		public void actionPerformed(ActionEvent event){
-			// get selected name
-			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-			if (selection >=0){
-				String accnr = (String)model.getValueAt(selection, 0);
-				//Show the dialog for adding withdraw amount for the current mane
-				BankWithdrawDialog wd = new BankWithdrawDialog((BankFrm)thisFrame,accnr);
-
-				// compute new amount
-				long deposit = Long.parseLong(getAmountDeposit());
-				String samount = (String)model.getValueAt(selection, 5);
-				long currentamount = Long.parseLong(samount);
-				long newamount=currentamount-deposit;
-				model.setValueAt(String.valueOf(newamount),selection, 5);
-				if (newamount <0){
-					JOptionPane.showMessageDialog(JButton_Withdraw, " Account "+accnr+" : balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		}
-	}
 	public String getAccountnr() {
 		return accountnr;
 	}
 	public void setAccountnr(String accountnr) {
 		this.accountnr = accountnr;
+	}
+	@Override
+	public TransactionDialog createDepositDialog(Form parent) {
+		return new BankDepositDialog(parent, accountnr);
+	}
+	@Override
+	public TransactionDialog createWithdrawDialog(Form parent) {
+		return new BankWithdrawDialog((BankFrm)thisFrame, accountnr);
 	}
 }
 

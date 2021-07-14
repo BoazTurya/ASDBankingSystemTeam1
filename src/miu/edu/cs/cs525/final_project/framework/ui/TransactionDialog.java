@@ -13,6 +13,34 @@ public abstract class TransactionDialog extends JDialog {
 	protected JLabel JLabel2 = new FrameLabel("Amount");
 	
 	protected JTextField JTextField_NAME = new FrameTextField();
+	public Form getParentFrame() {
+		return parentFrame;
+	}
+
+	public JLabel getJLabel1() {
+		return JLabel1;
+	}
+
+	public JLabel getJLabel2() {
+		return JLabel2;
+	}
+
+	public JTextField getJTextField_NAME() {
+		return JTextField_NAME;
+	}
+
+	public JTextField getJTextField_AMOUNT() {
+		return JTextField_AMOUNT;
+	}
+
+	public JButton getJButton_OK() {
+		return JButton_OK;
+	}
+
+	public JButton getJButton_Cancel() {
+		return JButton_Cancel;
+	}
+
 	protected JTextField JTextField_AMOUNT = new FrameTextField();
 	protected JButton JButton_OK = new FrameButton("OK");
 	protected JButton JButton_Cancel = new FrameButton("Cancel");
@@ -24,23 +52,45 @@ public abstract class TransactionDialog extends JDialog {
 
 		setModal(true);
 		getContentPane().setLayout(null);
-		setSize(400,200);
-		setVisible(true);
-		setBounds(430, 15, 275, 140);
-		show();
+		setSize(500,400);
+		setVisible(false);
+	
 		JTextField_NAME.setEditable(false);
 
-		getContentPane().add(JLabel1);JLabel1.setBounds(12,12,48,24);
-		getContentPane().add(JLabel2);JLabel2.setBounds(12,48,48,24);
-		getContentPane().add(JTextField_NAME);JTextField_NAME.setBounds(84,12,144,24);
-		getContentPane().add(JTextField_AMOUNT);JTextField_AMOUNT.setBounds(84,36,156,20);
+		getContentPane().add(JLabel1);JLabel1.setBounds(12,12,70,24);
+		getContentPane().add(JLabel2);JLabel2.setBounds(12,48,70,24);
+		getContentPane().add(JTextField_NAME);JTextField_NAME.setBounds(100,12,175,24);
+		getContentPane().add(JTextField_AMOUNT);JTextField_AMOUNT.setBounds(100,48,175,24);
 
 		getContentPane().add(JButton_OK);JButton_OK.setBounds(36,84,84,24);
 		getContentPane().add(JButton_Cancel);JButton_Cancel.setBounds(156,84,84,24);
+	}
 
-		//{{REGISTER_LISTENERS
-		JButton_OK.addActionListener((ActionEvent event)
-				->{parentFrame.setAmountDeposit(JTextField_AMOUNT.getText());dispose();});
-		JButton_Cancel.addActionListener((ActionEvent event)->dispose());
+	public void setParentFrame(Form parentFrame) {
+		this.parentFrame = parentFrame;
+	}
+
+	public void setJLabel1(JLabel jLabel1) {
+		JLabel1 = jLabel1;
+	}
+
+	public void setJLabel2(JLabel jLabel2) {
+		JLabel2 = jLabel2;
+	}
+
+	public void setJTextField_NAME(JTextField jTextField_NAME) {
+		JTextField_NAME = jTextField_NAME;
+	}
+
+	public void setJTextField_AMOUNT(JTextField jTextField_AMOUNT) {
+		JTextField_AMOUNT = jTextField_AMOUNT;
+	}
+
+	public void setJButton_OK(JButton jButton_OK) {
+		JButton_OK = jButton_OK;
+	}
+
+	public void setJButton_Cancel(JButton jButton_Cancel) {
+		JButton_Cancel = jButton_Cancel;
 	}
 }

@@ -1,17 +1,23 @@
 package miu.edu.cs.cs525.final_project.ccard.ui;
 
+import java.awt.event.ActionEvent;
+
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameTextField;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
+import miu.edu.cs.cs525.final_project.framework.ui.actions.CancelDialogAction;
+import miu.edu.cs.cs525.final_project.framework.ui.actions.OKButtonDepositAction;
 
-public class CreditDepositDialog extends TransactionDialog{
-    private String name;
-    private FrameTextField JTextField_NAME = new FrameTextField();
-    
+public class CreditDepositDialog extends TransactionDialog{ 
 	public CreditDepositDialog(Form form, String aname){
 		super(form);
-		name=aname;
 		setTitle("Deposit To Credit Account");
-	    JTextField_NAME.setText(name);
+		JLabel1.setText("CC Number");
+		JLabel2.setText("PaymentAmount");
+		
+	    JTextField_NAME.setText(aname);
+	    JButton_OK.addActionListener(new OKButtonDepositAction(this));
+	    JButton_Cancel.addActionListener(new CancelDialogAction(this));
+	    //dispose();
 	}
 }

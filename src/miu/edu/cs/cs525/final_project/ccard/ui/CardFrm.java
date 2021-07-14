@@ -27,11 +27,11 @@ public class CardFrm extends Form
 		setThisFrame(this);
 		setTitle("Credit-card processing Application.");
 
-		super.model.addColumn("Name");
-		super.model.addColumn("CC number");
-		super.model.addColumn("Exp date");
-		super.model.addColumn("Type");
-		super.model.addColumn("Balance");
+		super.getModel().addColumn("CC number");
+		super.getModel().addColumn("Name");
+		super.getModel().addColumn("Exp date");
+		super.getModel().addColumn("Type");
+		super.getModel().addColumn("Balance");
 
 		JButton_GenBill.setBounds(240,20,192,33);
 		JButton_NewCCAccount.setBounds(24,20,192,33);
@@ -44,8 +44,8 @@ public class CardFrm extends Form
 		//this.addWindowListener(aSymWindow);
 		JButton_NewCCAccount.addActionListener(new JButtonNewCC_Action());
 		JButton_GenBill.addActionListener((ActionEvent event)->{JDialogGenBill billFrm = new JDialogGenBill();});
-		JButton_Deposit.addActionListener(new JButtonDepositAction());
-		JButton_Withdraw.addActionListener(new JButtonWithdrawAction());
+		JButton_Deposit.addActionListener(new FormDepositButtonAction());
+		JButton_Withdraw.addActionListener(new FormWithdrawButtonAction());
 
 	}
 	/*****************************************************
@@ -94,60 +94,26 @@ public class CardFrm extends Form
 
 			if (isNewaccount()){
 				// add row to table
-				rowdata[0] = getClientName();
-				rowdata[1] = ccnumber;
-				rowdata[2] = expdate;
-				rowdata[3] = getAccountType();
-				rowdata[4] = "0";
-				model.addRow(rowdata);
+				rowdata[columnIndex++] = getClientName();
+				rowdata[columnIndex++] = ccnumber;
+				rowdata[columnIndex++] = expdate;
+				rowdata[columnIndex++] = getAccountType();
+				rowdata[columnIndex] = "0";
+				getModel().addRow(rowdata);
 				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 				setNewaccount(false);
 			}
 		}
 	}
-
-	class JButtonWithdrawAction implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent evt) {
-			// get selected name
-			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-			if (selection >=0){
-				String name = (String)model.getValueAt(selection, 0);
-
-				//Show the dialog for adding withdraw amount for the current mane
-				CreditChargeDialog wd = new CreditChargeDialog(getThisFrame(),name);
-
-				// compute new amount
-				long deposit = Long.parseLong(getAmountDeposit());
-				String samount = (String)model.getValueAt(selection, 4);
-				long currentamount = Long.parseLong(samount);
-				long newamount=currentamount-deposit;
-				model.setValueAt(String.valueOf(newamount),selection, 4);
-				if (newamount <0){
-					JOptionPane.showMessageDialog(JButton_Withdraw, " "+name+" Your balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		}
+	@Override
+	public TransactionDialog createDepositDialog(Form parent) {
+		// TODO Auto-generated method stub
+		return new CreditDepositDialog(thisFrame, ccnumber);
 	}
-	class JButtonDepositAction implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			// get selected name
-			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-			if (selection >=0){
-				String accnr = (String)model.getValueAt(selection, 0);
-
-				//Show the dialog for adding deposit amount for the current mane
-				CreditDepositDialog dep = new CreditDepositDialog(thisFrame,"enter amount to deposit");
-	
-				// compute new amount
-				long deposit = Long.parseLong(getAmountDeposit());
-				String samount = (String)model.getValueAt(selection, 5);
-				long currentamount = Long.parseLong(samount);
-				long newamount=currentamount+deposit;
-				model.setValueAt(String.valueOf(newamount),selection, 5);
-			}
-		}
+	@Override
+	public TransactionDialog createWithdrawDialog(Form parent) {
+		// TODO Auto-generated method stub
+		return new CreditChargeDialog(thisFrame, ccnumber);
 	}
 
 }
