@@ -5,7 +5,7 @@ import miu.edu.cs.cs525.final_project.framework.strategy.PaymentStrategy;
 
 public class PaymentStrategyA implements PaymentStrategy {
     @Override
-    public double minimumPayment(Account account) {
+    public double minimumPayment() {
         return 0;
     }
 }

@@ -21,6 +21,7 @@ public class EmailSender implements Observer {
 
         if (lastAmount > alertLimit) {
            String  email = account.getCustomer().getEmail();
+            System.out.println("SENDING NOTIFICATION EMAIL FOR account : " + account.getAccountNumber());
 //            this.notifyAllObservers(account);
         }
     }

@@ -9,12 +9,7 @@ import miu.edu.cs.cs525.final_project.framework.service.CustomerService;
 
 public class BankAccountService extends AccountServiceImpl {
 
-
     public BankAccountService(AccountDAO accountDAO, CustomerDAO customerDAO, CustomerService customerService, AccountFactory accountFactory, Report report) {
         super(accountDAO, customerDAO, customerService, accountFactory, report);
-    }
-
-    @Override
-    public void calculateInterest() {
     }
 }

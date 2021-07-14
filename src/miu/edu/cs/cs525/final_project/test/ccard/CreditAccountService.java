@@ -15,7 +15,22 @@ public class CreditAccountService extends AccountServiceImpl {
         super(accountDAO, customerDAO, customerService, accountFactory, report);
     }
 
-    public Account createOrganizationAccount(String accountNumber, String name, String email, String street, String city, String state, String zip, int numberOfEmployees, String accountType, LocalDate expirationDate) {
-        return super.createOrganizationAccount(accountNumber, name, email, street, city, state, zip, numberOfEmployees, accountType);
+    public CreditAccount createPersonalAccount(String accountNumber, String name, String email, String street, String city, String state, String zip, LocalDate dob, String accountType,LocalDate expirationDate) {
+        CreditAccount account = (CreditAccount) super.createPersonalAccount(accountNumber, name, email, street, city, state, zip, dob, accountType);
+        account.setExpirationDate(expirationDate);
+        accountDAO.updateAccount(account);
+        return account;
+    }
+
+    public CreditAccount createOrganizationAccount(String accountNumber, String name, String email, String street, String city, String state, String zip, int numberOfEmployees, String accountType, LocalDate expirationDate) {
+        CreditAccount account = (CreditAccount)  super.createOrganizationAccount(accountNumber, name, email, street, city, state, zip, numberOfEmployees, accountType);
+        account.setExpirationDate(expirationDate);
+        accountDAO.updateAccount(account);
+        return account;
+    }
+
+    @Override
+    public Report generateReport(String accountNumber) {
+        return super.generateReport(accountNumber);
     }
 }

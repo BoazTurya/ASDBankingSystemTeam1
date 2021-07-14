@@ -21,18 +21,24 @@ public class Application {
         BankAccountService bankAccountService = new BankAccountService(accountDAO,customerDAO,customerService,accountFactory,report);
 
         bankAccountService.createPersonalAccount("111","Abenezer","ab@email.com","street","city","state","zip", LocalDate.now(),"saving");
-        double balance = bankAccountService.getBalance("111");
-        System.out.println("BALANCE : " + balance);
+        bankAccountService.createOrganizationAccount("112","hope","hope@com.org","street","city","state","zip",6,"checking");
+
+//        System.out.println(accountDAO.getAccounts());
+
+        bankAccountService.deposit("112",202);
+        bankAccountService.withdraw("112",141);
+        bankAccountService.deposit("112",31);
 
         bankAccountService.deposit("111",121);
-        balance = bankAccountService.getBalance("111");
-        System.out.println("BALANCE : " + balance);
-
         bankAccountService.withdraw("111",101);
-        balance = bankAccountService.getBalance("111");
-        System.out.println("BALANCE : " + balance);
+        bankAccountService.deposit("111",100);
+        bankAccountService.calculateInterest();
 
         report = bankAccountService.generateReport("111");
         System.out.println("Report : " + report.getReport());
+
+        report = bankAccountService.generateReport("112");
+        System.out.println("Report : " + report.getReport());
+
     }
 }
