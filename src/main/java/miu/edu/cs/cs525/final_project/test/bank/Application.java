@@ -17,15 +17,15 @@ public class Application {
         AccountFactory accountFactory = new BankAccountFactory();
         BankAccountService bankAccountService = new BankAccountService(accountDAO,customerDAO,customerService,accountFactory);
 
-        bankAccountService.createPersonalAccount("111","Abenezer","ab@email.com","street","city","state","zip", LocalDate.now(),"saving");
+        bankAccountService.createPersonalAccount("111","Abenezer","raeycareer@gmail.com","street","city","state","zip", LocalDate.now(),"saving");
         double balance = bankAccountService.getBalance("111");
         System.out.println("BALANCE : " + balance);
 
-        bankAccountService.deposit("111",121);
+        bankAccountService.deposit("111",800);
         balance = bankAccountService.getBalance("111");
         System.out.println("BALANCE : " + balance);
 
-        bankAccountService.withdraw("111",101);
+        bankAccountService.withdraw("111",600);
         balance = bankAccountService.getBalance("111");
         System.out.println("BALANCE : " + balance);
     }

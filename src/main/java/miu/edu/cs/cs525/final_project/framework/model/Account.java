@@ -15,7 +15,7 @@ public abstract class Account {
     private PaymentStrategy paymentStrategy;
     private Collection<AccountEntry> accountEntries;
 
-    public Account(String accountNumber, Customer customer, InterestStrategy accountStrategy,AlertStrategy alertStrategy,PaymentStrategy paymentStrategy) {
+    public Account(String accountNumber, Customer customer, InterestStrategy accountStrategy, AlertStrategy alertStrategy, PaymentStrategy paymentStrategy) {
         this.accountNumber = accountNumber;
         this.customer = customer;
         this.interestStrategy = accountStrategy;
@@ -27,6 +27,7 @@ public abstract class Account {
     public String getAccountNumber() {
         return accountNumber;
     }
+
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
@@ -34,6 +35,7 @@ public abstract class Account {
     public Collection<AccountEntry> getAccountEntry() {
         return accountEntries;
     }
+
     public void addAccountEntry(AccountEntry accountEntry) {
         this.accountEntries.add(accountEntry);
     }
@@ -70,7 +72,7 @@ public abstract class Account {
         this.paymentStrategy = paymentStrategy;
     }
 
-    public double getBalance(){
+    public double getBalance() {
         return this.accountEntries.stream().mapToDouble(AccountEntry::getAmount).sum();
     }
 
