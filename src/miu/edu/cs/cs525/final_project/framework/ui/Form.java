@@ -12,9 +12,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class Form extends JFrame{
 
-	/****
-	 * init variables in the object
-	 ****/
 	protected String  clientName;
 	protected String street;
 	protected String city;
@@ -70,29 +67,17 @@ public class Form extends JFrame{
 		
 	}
 
-
-
-	public class SymWindow extends java.awt.event.WindowAdapter
-	{
+	public class SymWindow extends java.awt.event.WindowAdapter{
 		public void windowClosing(WindowEvent event)
 		{
-			Object object = event.getSource();
-			if (object == Form.this)
+	
 				Form_windowClosing(event);
 		}
 	}
 
-	void Form_windowClosing(WindowEvent event)
-	{
+	void Form_windowClosing(WindowEvent event){
 		// to do: code goes here.
-	
-		try {
-			this.exitApplication();
-		} catch (Exception e) {
-		}
-	}
-	protected void exitApplication()
-	{
+
 		try {
 			this.setVisible(false);    // hide the Frame
 			this.dispose();            // free the system resources
@@ -100,6 +85,7 @@ public class Form extends JFrame{
 		} catch (Exception e) {
 		}
 	}
+	
 	public boolean isNewaccount() {
 		return newaccount;
 	}

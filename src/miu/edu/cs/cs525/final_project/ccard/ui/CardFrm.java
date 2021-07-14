@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.ccard;
+package miu.edu.cs.cs525.final_project.ccard.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,8 +40,8 @@ public class CardFrm extends Form
 		super.JPanel1.add(JButton_NewCCAccount);
 		super.JPanel1.add(JButton_GenBill);
 
-		SymWindow aSymWindow = new SymWindow();
-		this.addWindowListener(aSymWindow);
+		//SymWindow aSymWindow = new SymWindow();
+		//this.addWindowListener(aSymWindow);
 		JButton_NewCCAccount.addActionListener(new JButtonNewCC_Action());
 		JButton_GenBill.addActionListener((ActionEvent event)->{JDialogGenBill billFrm = new JDialogGenBill();});
 		JButton_Deposit.addActionListener(new JButtonDepositAction());

@@ -1,5 +1,6 @@
-package miu.edu.cs.cs525.final_project.bank;
+package miu.edu.cs.cs525.final_project.bank.ui;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +10,7 @@ import javax.swing.UIManager;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
+import miu.edu.cs.cs525.final_project.framework.ui.actions.AddInterestAction;
 import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
 
 /**
@@ -55,11 +57,9 @@ public class BankFrm extends Form
 		JButton_Withdraw.addActionListener(new JButtonWithdrawAction());
 		JButton_PerAC.addActionListener(new JButtonPerAC_Action());
 		JButton_CompAC.addActionListener(new JButtonCompAC_Action());
-		JButton_Addinterest.addActionListener(new AddInterestAction());
+		JButton_Addinterest.addActionListener(new AddInterestAction(JButton_Addinterest));
 
 	}
-
-
 	/*****************************************************
 	 * The entry point for this application.
 	 * Sets the Look and Feel to the System Look and Feel.
@@ -175,23 +175,9 @@ public class BankFrm extends Form
 			}
 		}
 	}
-	class AddInterestAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
-			
-			/*
-			 * 
-			 * to do
-			 */
-		}
-
-	}
 	public String getAccountnr() {
 		return accountnr;
 	}
-
-
 	public void setAccountnr(String accountnr) {
 		this.accountnr = accountnr;
 	}

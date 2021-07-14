@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.ccard;
+package miu.edu.cs.cs525.final_project.ccard.ui;
 /*
 		A basic implementation of the JDialog class.
 */

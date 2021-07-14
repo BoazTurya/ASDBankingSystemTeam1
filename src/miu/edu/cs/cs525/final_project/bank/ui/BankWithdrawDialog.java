@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.bank;
+package miu.edu.cs.cs525.final_project.bank.ui;
 
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
 

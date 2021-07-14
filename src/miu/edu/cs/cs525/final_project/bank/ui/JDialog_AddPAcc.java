@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.bank;
+package miu.edu.cs.cs525.final_project.bank.ui;
 /*
 		A basic implementation of the JDialog class.
 */
@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import miu.edu.cs.cs525.final_project.bank.JDialog_AddCompAcc.JButtonOK_ActionPerformed;
 import miu.edu.cs.cs525.final_project.framework.ui.AddAccountDialog;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameLabel;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameRadioButton;

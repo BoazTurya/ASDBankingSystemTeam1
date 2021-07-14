@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.bank;
+package miu.edu.cs.cs525.final_project.bank.ui;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;

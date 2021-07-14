@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.ccard;
+package miu.edu.cs.cs525.final_project.ccard.ui;
 
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameTextField;
