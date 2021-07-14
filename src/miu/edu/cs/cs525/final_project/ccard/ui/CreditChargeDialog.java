@@ -18,7 +18,7 @@ public class CreditChargeDialog extends TransactionDialog{
 		JLabel2.setText("ChargeAmount");
 		
 	    JTextField_NAME.setText(aname);
-	    JButton_OK.addActionListener(new OKButtonWithdrawAction(this));
+	    JButton_OK.addActionListener(new OKButtonWithdrawAction(parent,this));
 	    JButton_Cancel.addActionListener(new CancelDialogAction(this));
 	}
 }

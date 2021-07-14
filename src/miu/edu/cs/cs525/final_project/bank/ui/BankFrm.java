@@ -102,7 +102,8 @@ public class BankFrm extends Form
 				getModel().addRow(rowdata);
 				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 				newaccount=false;
-			}        
+			}   
+			columnIndex = 0;
 		}
 	}
 

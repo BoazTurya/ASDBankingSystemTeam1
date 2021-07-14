@@ -16,7 +16,7 @@ public class CreditDepositDialog extends TransactionDialog{
 		JLabel2.setText("PaymentAmount");
 		
 	    JTextField_NAME.setText(aname);
-	    JButton_OK.addActionListener(new OKButtonDepositAction(this));
+	    JButton_OK.addActionListener(new OKButtonDepositAction(form, this));
 	    JButton_Cancel.addActionListener(new CancelDialogAction(this));
 	    //dispose();
 	}

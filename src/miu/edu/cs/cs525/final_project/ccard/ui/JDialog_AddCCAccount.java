@@ -95,6 +95,8 @@ public class JDialog_AddCCAccount extends AddAccountDialog
 		           }
 			   parentframe.setNewaccount(true);
 		       dispose();
+		       
+		       
 		}
 	}
 }

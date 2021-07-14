@@ -16,7 +16,7 @@ public class BankDepositDialog extends TransactionDialog{
 		
 		JLabel1.setText("Bank AccNr");
 	    JTextField_NAME.setText(accnr);
-	    JButton_OK.addActionListener(new OKButtonDepositAction(this));
+	    JButton_OK.addActionListener(new OKButtonDepositAction(parent, this));
 	    JButton_Cancel.addActionListener(new CancelDialogAction(this));
 	}
 }

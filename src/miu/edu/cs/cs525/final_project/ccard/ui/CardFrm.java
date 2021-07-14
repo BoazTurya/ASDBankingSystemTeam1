@@ -103,6 +103,7 @@ public class CardFrm extends Form
 				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 				setNewaccount(false);
 			}
+			columnIndex = 0;
 		}
 	}
 	@Override

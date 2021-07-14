@@ -14,7 +14,7 @@ public class BankWithdrawDialog extends TransactionDialog{
 		setTitle("Bank Withdraw dialog");
 		JLabel1.setText("Bank AccNr");
 	    JTextField_NAME.setText(accnr);
-	    JButton_OK.addActionListener(new OKButtonWithdrawAction(this));
+	    JButton_OK.addActionListener(new OKButtonWithdrawAction(parent, this));
 	    JButton_Cancel.addActionListener(new CancelDialogAction(this));
 	}
 }
