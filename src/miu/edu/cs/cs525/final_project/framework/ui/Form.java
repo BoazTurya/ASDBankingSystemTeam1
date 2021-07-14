@@ -59,8 +59,7 @@ public abstract class Form extends JFrame{
 		columnIndex = 0;
 		setNewaccount(false);
 		
-		setAccountController(UIControllerImpl.getInstance());
-
+		accountController = UIControllerImpl.getInstance();
 
 		JPanel1.add(JScrollPane1);
 		JScrollPane1.setBounds(12,92,444,160);

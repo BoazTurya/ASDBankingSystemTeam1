@@ -52,7 +52,8 @@ public class JDialog_AddCompAcc extends AddAccountDialog{
 				parentframe.setAccountType(JRadioButton_Chk.isSelected()?"Ch":"S");
 				dispose();
 			}else {
-				J
+			
 			}
 		}
 	}
+}

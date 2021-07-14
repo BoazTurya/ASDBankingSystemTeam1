@@ -9,7 +9,6 @@ public class UIControllerImpl implements UIController {
 	private AccountService accountService;
 
 	private UIControllerImpl() {
-		// TODO Auto-generated constructor stub
 	}
 	public static UIControllerImpl getInstance(){
 //		if(instance ==null) {
@@ -17,7 +16,7 @@ public class UIControllerImpl implements UIController {
 				if(instance==null) {
 					instance = new UIControllerImpl();
 				}
-		//	}}
+		
 		return instance;
 	}
 	@Override

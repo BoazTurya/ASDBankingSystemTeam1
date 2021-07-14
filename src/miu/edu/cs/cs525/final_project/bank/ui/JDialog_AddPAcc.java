@@ -89,7 +89,7 @@ public class JDialog_AddPAcc extends AddAccountDialog
 	       }else{
 	    	   parentFrame.setAccountType("S");
 	       }
-	       parentFrame.newaccount=true;
+	      // parentFrame.newaccount=true;
 	       dispose();
 		}	 
 	}
