@@ -37,9 +37,6 @@ public class JDialog_AddCompAcc extends AddAccountDialog{
 		getContentPane().add(JLabel8);JLabel8.setBounds(12,240,100,24);
 		getContentPane().add(JTextField_ACNR);JTextField_ACNR.setBounds(120,72,156,20);
 		getContentPane().add(JTextField_NoOfEmp);JTextField_NoOfEmp.setBounds(120,240,156,20);
-	
-		getContentPane().add(JButton_OK);
-		getContentPane().add(JButton_Cancel);
 		
 		JButton_OK.addActionListener(new JButtonOK_ActionPerformed());
 	}

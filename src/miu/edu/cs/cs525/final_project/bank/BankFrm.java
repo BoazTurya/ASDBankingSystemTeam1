@@ -3,14 +3,12 @@ package miu.edu.cs.cs525.final_project.bank;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import miu.edu.cs.cs525.final_project.framework.ui.DepositDialog;
-import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
-import miu.edu.cs.cs525.final_project.framework.ui.actions.DepositAction;
+import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
+import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
 import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
 
 /**
@@ -136,7 +134,7 @@ public class BankFrm extends Form
 		}
 	}
 
-	class JButtonDepositAction extends DepositAction{
+	class JButtonDepositAction implements ActionListener{
 			public void actionPerformed(ActionEvent event) {
 			// get selected name
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
@@ -144,9 +142,7 @@ public class BankFrm extends Form
 				String accnr = (String)model.getValueAt(selection, 0);
 
 				//Show the dialog for adding deposit amount for the current mane
-				DepositDialog dep = new DepositDialog(thisFrame);
-				dep.setBounds(430, 15, 275, 140);
-				dep.show();
+				TransactionDialog dep = new BankDepositDialog(thisFrame,"deposit to your bank");
 
 				// compute new amount
 				long deposit = Long.parseLong(getAmountDeposit());
@@ -165,9 +161,7 @@ public class BankFrm extends Form
 			if (selection >=0){
 				String accnr = (String)model.getValueAt(selection, 0);
 				//Show the dialog for adding withdraw amount for the current mane
-				JDialog_Withdraw wd = new JDialog_Withdraw((BankFrm)thisFrame,accnr);
-				wd.setBounds(430, 15, 275, 140);
-				wd.show();
+				BankWithdrawDialog wd = new BankWithdrawDialog((BankFrm)thisFrame,accnr);
 
 				// compute new amount
 				long deposit = Long.parseLong(getAmountDeposit());

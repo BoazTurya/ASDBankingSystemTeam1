@@ -7,10 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import miu.edu.cs.cs525.final_project.framework.ui.DepositDialog;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
-import miu.edu.cs.cs525.final_project.framework.ui.WithdrawDialog;
-import miu.edu.cs.cs525.final_project.framework.ui.actions.DepositAction;
+import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
+import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
 import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
 
 /**
@@ -18,9 +17,10 @@ import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
  */
 public class CardFrm extends Form
 {
-	String expdate, ccnumber; 
-	JButton JButton_NewCCAccount = new JButton("Add Credit-card account");
-	JButton JButton_GenBill = new javax.swing.JButton("Generate Monthly bills");
+	String expdate; 
+	String ccnumber; 
+	JButton JButton_NewCCAccount = new FrameButton("Add Credit-card account");
+	JButton JButton_GenBill = new FrameButton("Generate Monthly bills");
 
 	public CardFrm()
 	{
@@ -43,8 +43,7 @@ public class CardFrm extends Form
 		SymWindow aSymWindow = new SymWindow();
 		this.addWindowListener(aSymWindow);
 		JButton_NewCCAccount.addActionListener(new JButtonNewCC_Action());
-		JButton_GenBill.addActionListener((ActionEvent event)
-				->{JDialogGenBill billFrm = new JDialogGenBill();});
+		JButton_GenBill.addActionListener((ActionEvent event)->{JDialogGenBill billFrm = new JDialogGenBill();});
 		JButton_Deposit.addActionListener(new JButtonDepositAction());
 		JButton_Withdraw.addActionListener(new JButtonWithdrawAction());
 
@@ -89,12 +88,6 @@ public class CardFrm extends Form
 	}
 	class JButtonNewCC_Action implements ActionListener{
 		public void actionPerformed(ActionEvent event){
-			/*
-		 JDialog_AddPAcc type object is for adding personal information
-		 construct a JDialog_AddPAcc type object 
-		 set the boundaries and show it 
-			 */
-
 			JDialog_AddCCAccount ccac = new JDialog_AddCCAccount((CardFrm) getThisFrame());
 			ccac.setBounds(450, 20, 300, 380);
 			ccac.show();
@@ -113,9 +106,8 @@ public class CardFrm extends Form
 		}
 	}
 
-	/**/
-
-	class JButtonWithdrawAction extends WithdrawAction{
+	class JButtonWithdrawAction implements ActionListener{
+		@Override
 		public void actionPerformed(ActionEvent evt) {
 			// get selected name
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
@@ -123,9 +115,7 @@ public class CardFrm extends Form
 				String name = (String)model.getValueAt(selection, 0);
 
 				//Show the dialog for adding withdraw amount for the current mane
-				JDialog_Withdraw wd = new JDialog_Withdraw(getThisFrame(),name);
-				wd.setBounds(430, 15, 275, 140);
-				wd.show();
+				CreditChargeDialog wd = new CreditChargeDialog(getThisFrame(),name);
 
 				// compute new amount
 				long deposit = Long.parseLong(getAmountDeposit());
@@ -139,7 +129,8 @@ public class CardFrm extends Form
 			}
 		}
 	}
-	class JButtonDepositAction extends DepositAction{
+	class JButtonDepositAction implements ActionListener{
+		@Override
 		public void actionPerformed(ActionEvent event) {
 			// get selected name
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
@@ -147,10 +138,8 @@ public class CardFrm extends Form
 				String accnr = (String)model.getValueAt(selection, 0);
 
 				//Show the dialog for adding deposit amount for the current mane
-				DepositDialog dep = new DepositDialog(thisFrame);
-				dep.setBounds(430, 15, 275, 140);
-				dep.show();
-
+				CreditDepositDialog dep = new CreditDepositDialog(thisFrame,"enter amount to deposit");
+	
 				// compute new amount
 				long deposit = Long.parseLong(getAmountDeposit());
 				String samount = (String)model.getValueAt(selection, 5);
