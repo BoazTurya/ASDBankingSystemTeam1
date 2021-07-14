@@ -6,7 +6,7 @@ public class AlertStrategyA implements AlertStrategy {
     private static AlertStrategy instance = new AlertStrategyA();
     @Override
     public double alertAmount() {
-        return 500;
+        return 50;
     }
 
     public static AlertStrategy getInstance() {

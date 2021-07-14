@@ -10,12 +10,13 @@ import java.time.LocalDate;
 
 public class CreditAccount extends Account {
     private LocalDate expirationDate;
-    private double lastMonthBalance;
     private double lastMonthDeposit;
     private double lastMonthWithdraw;
     private double lastMonthInterest;
     public CreditAccount(String accountNumber, Customer customer, InterestStrategy accountStrategy, AlertStrategy alertStrategy, PaymentStrategy paymentStrategy) {
         super(accountNumber, customer, accountStrategy, alertStrategy, paymentStrategy);
+        TO_ACCOUNT = "payment";
+        FROM_ACCOUNT = "charge";
     }
 
     @Override
@@ -29,13 +30,6 @@ public class CreditAccount extends Account {
 
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
-    }
-    public void setLastMonthBalance(double balance){
-        lastMonthBalance = balance;
-    }
-
-    public double getLastMonthBalance() {
-        return lastMonthBalance;
     }
 
     public double getLastMonthDeposit() {
@@ -61,4 +55,5 @@ public class CreditAccount extends Account {
     public void setLastMonthInterest(double lastMonthInterest) {
         this.lastMonthInterest = lastMonthInterest;
     }
+
 }

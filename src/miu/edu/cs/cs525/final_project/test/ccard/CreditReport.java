@@ -24,8 +24,8 @@ public class CreditReport extends Report {
         double paymentRate = account.getPaymentStrategy().minimumPayment();
         double totalDue = paymentRate * account.getBalance();
 
-        report += "\ntotal deposit " + depositSum;
-        report += "\ntotal withdraw " + withdrawSum;
+        report += "\ntotal " + account.getTO_ACCOUNT()  + " " + depositSum;
+        report += "\ntotal " + account.getFROM_ACCOUNT() + " " + withdrawSum;
         report += "\ntotal interest " + interestSum;
         report += "\nbalance " + account.getBalance();
         report += "\ntotal due " + totalDue;

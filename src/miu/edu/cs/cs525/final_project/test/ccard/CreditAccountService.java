@@ -29,6 +29,14 @@ public class CreditAccountService extends AccountServiceImpl {
         return account;
     }
 
+    public void charge(String accountNumber,double amount){
+        super.withdraw(accountNumber,amount);
+    }
+
+    public void makePayment(String accountNumber, double amount){
+        super.deposit(accountNumber,amount);
+    }
+
     @Override
     public Report generateReport(String accountNumber) {
         return super.generateReport(accountNumber);

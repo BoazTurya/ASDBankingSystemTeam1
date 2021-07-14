@@ -13,6 +13,8 @@ public abstract class Account {
     private AlertStrategy alertStrategy;
     private PaymentStrategy paymentStrategy;
     private Collection<AccountEntry> accountEntries;
+    protected String TO_ACCOUNT = "deposit";
+    protected String FROM_ACCOUNT = "withdraw";
 
     public Account(String accountNumber, Customer customer, InterestStrategy accountStrategy,AlertStrategy alertStrategy,PaymentStrategy paymentStrategy) {
         this.accountNumber = accountNumber;
@@ -72,10 +74,10 @@ public abstract class Account {
     public abstract double getBalance();
 
     public double totalDeposit(){
-        return getAccountEntries().stream().filter(accountEntry -> accountEntry.getDescription() == "deposit").mapToDouble(entry -> entry.getAmount()).sum();
+        return getAccountEntries().stream().filter(accountEntry -> accountEntry.getDescription() == getTO_ACCOUNT()).mapToDouble(entry -> entry.getAmount()).sum();
     };
     public double totalWithdraw(){
-        return getAccountEntries().stream().filter(accountEntry -> accountEntry.getDescription() == "withdraw").mapToDouble(entry -> entry.getAmount()).sum();
+        return getAccountEntries().stream().filter(accountEntry -> accountEntry.getDescription() == getFROM_ACCOUNT()).mapToDouble(entry -> entry.getAmount()).sum();
     };
     public double totalInterest(){
         return getAccountEntries().stream().filter(accountEntry -> accountEntry.getDescription() == "interest").mapToDouble(entry -> entry.getAmount()).sum();
@@ -90,15 +92,23 @@ public abstract class Account {
     }
 
     public Account withdraw(double amount){
-        AccountEntry accountEntry = new AccountEntry(amount,"withdraw");
+        AccountEntry accountEntry = new AccountEntry(amount,FROM_ACCOUNT);
         addAccountEntry(accountEntry);
         return this;
     }
 
     public Account deposit(double amount){
-        AccountEntry accountEntry = new AccountEntry(amount,"deposit");
+        AccountEntry accountEntry = new AccountEntry(amount,TO_ACCOUNT);
         addAccountEntry(accountEntry);
         return this;
+    }
+
+
+    public String getTO_ACCOUNT(){
+        return TO_ACCOUNT;
+    }
+    public String getFROM_ACCOUNT(){
+        return FROM_ACCOUNT;
     }
 
     @Override
