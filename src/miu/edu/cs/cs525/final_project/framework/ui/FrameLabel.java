@@ -8,6 +8,5 @@ public class FrameLabel extends JLabel{
 	public FrameLabel(String name) {
 		super(name);
 		setForeground(Color.black);
-		setBounds(12,84,48,24);
 	}
 }
