@@ -18,7 +18,7 @@ public class Application {
         AccountFactory accountFactory = new CardFactory();
         Report report = new CreditReport();
 
-        CardAccountServiceImpl creditAccountService = new CardAccountServiceImpl(accountDAO,customerDAO,customerService,accountFactory,report);
+        CardAccountService creditAccountService = new CardAccountServiceImpl(accountDAO,customerDAO,customerService,accountFactory,report);
 
         creditAccountService.createPersonalAccount("111","Abenezer","ab@email.com","street","city","state","zip", LocalDate.now(),"silver",LocalDate.now());
         creditAccountService.createOrganizationAccount("112","hope","hope@com.org","street","city","state","zip",6,"gold",LocalDate.now());

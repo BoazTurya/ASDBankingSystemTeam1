@@ -2,6 +2,7 @@ package miu.edu.cs.cs525.final_project.framework.service;
 
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.model.Customer;
+import miu.edu.cs.cs525.final_project.framework.model.Report;
 
 import java.time.LocalDate;
 
@@ -13,4 +14,5 @@ public interface AccountService {
     void deposit(String accountNumber,double amount);
     void withdraw(String accountNumber,double amount);
     void calculateInterest();
+    Report generateReport(String accountNumber);
 }
