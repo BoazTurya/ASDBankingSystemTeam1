@@ -28,13 +28,13 @@ public class Application {
 
 //        System.out.println(accountDAO.getAccounts());
 
-        creditAccountService.withdraw("112",141);
-        creditAccountService.withdraw("112",31);
+        creditAccountService.charge("112",141);
+        creditAccountService.charge("112",31);
         creditAccountService.makePayment("112",202);
 
 
-        creditAccountService.withdraw("111",121);
-        creditAccountService.withdraw("111",101);
+        creditAccountService.charge("111",121);
+        creditAccountService.charge("111",101);
         creditAccountService.makePayment("111",100);
 //        creditAccountService.calculateInterest();
 
