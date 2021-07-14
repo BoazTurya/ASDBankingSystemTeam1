@@ -14,7 +14,7 @@ public class EmailSender implements Observer {
 
     @Override
     public void update(Account account) {
-        List<AccountEntry> accountEntries = account.getAccountEntries().stream().toList();
+        List<AccountEntry> accountEntries = account.getAccountEntries().stream().collect(Collectors.toList());
         double alertLimit = account.getAlertStrategy().alertAmount();
         int entry_length = accountEntries.size();
         double lastAmount = accountEntries.get(entry_length-1).getAmount();
