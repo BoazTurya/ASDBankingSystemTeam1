@@ -10,8 +10,8 @@ import miu.edu.cs.cs525.final_project.framework.service.CustomerService;
 
 import java.time.LocalDate;
 
-public class CreditAccountService extends AccountServiceImpl {
-    public CreditAccountService(AccountDAO accountDAO, CustomerDAO customerDAO, CustomerService customerService, AccountFactory accountFactory, Report report) {
+public class CardAccountServiceImpl extends AccountServiceImpl implements CardAccountService {
+    public CardAccountServiceImpl(AccountDAO accountDAO, CustomerDAO customerDAO, CustomerService customerService, AccountFactory accountFactory, Report report) {
         super(accountDAO, customerDAO, customerService, accountFactory, report);
     }
 

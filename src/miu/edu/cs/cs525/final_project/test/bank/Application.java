@@ -18,7 +18,7 @@ public class Application {
         AccountFactory accountFactory = new BankAccountFactory();
         Report report = new BankAccountReport();
 
-        BankAccountService bankAccountService = new BankAccountService(accountDAO,customerDAO,customerService,accountFactory,report);
+        BankAccountServiceImpl bankAccountService = new BankAccountServiceImpl(accountDAO,customerDAO,customerService,accountFactory,report);
 
         bankAccountService.createPersonalAccount("111","Abenezer","ab@email.com","street","city","state","zip", LocalDate.now(),"saving");
         bankAccountService.createOrganizationAccount("112","hope","hope@com.org","street","city","state","zip",6,"checking");

@@ -6,11 +6,7 @@ import miu.edu.cs.cs525.final_project.framework.dao.CustomerDAO;
 import miu.edu.cs.cs525.final_project.framework.dao.CustomerDAOImpl;
 import miu.edu.cs.cs525.final_project.framework.factory.AccountFactory;
 import miu.edu.cs.cs525.final_project.framework.model.Report;
-import miu.edu.cs.cs525.final_project.framework.service.AccountService;
 import miu.edu.cs.cs525.final_project.framework.service.CustomerServiceImpl;
-import miu.edu.cs.cs525.final_project.test.bank.BankAccountFactory;
-import miu.edu.cs.cs525.final_project.test.bank.BankAccountReport;
-import miu.edu.cs.cs525.final_project.test.bank.BankAccountService;
 
 import java.time.LocalDate;
 
@@ -22,7 +18,7 @@ public class Application {
         AccountFactory accountFactory = new CardFactory();
         Report report = new CreditReport();
 
-        CreditAccountService creditAccountService = new CreditAccountService(accountDAO,customerDAO,customerService,accountFactory,report);
+        CardAccountServiceImpl creditAccountService = new CardAccountServiceImpl(accountDAO,customerDAO,customerService,accountFactory,report);
 
         creditAccountService.createPersonalAccount("111","Abenezer","ab@email.com","street","city","state","zip", LocalDate.now(),"silver",LocalDate.now());
         creditAccountService.createOrganizationAccount("112","hope","hope@com.org","street","city","state","zip",6,"gold",LocalDate.now());
@@ -37,7 +33,6 @@ public class Application {
         creditAccountService.charge("111",121);
         creditAccountService.charge("111",101);
         creditAccountService.makePayment("111",100);
-//        creditAccountService.calculateInterest();
 
         report = creditAccountService.generateReport("111");
         System.out.println("Report : " + report.getReport());
