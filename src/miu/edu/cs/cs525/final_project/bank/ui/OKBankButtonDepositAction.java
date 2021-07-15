@@ -3,9 +3,7 @@ package miu.edu.cs.cs525.final_project.bank.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
-import miu.edu.cs.cs525.final_project.framework.ui.controller.UIControllerImpl;
 
 public class OKBankButtonDepositAction implements ActionListener {
 	TransactionDialog transactionDialog;

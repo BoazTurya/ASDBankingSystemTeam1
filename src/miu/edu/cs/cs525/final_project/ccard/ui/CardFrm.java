@@ -3,25 +3,18 @@ package miu.edu.cs.cs525.final_project.ccard.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.Collection;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
-import miu.edu.cs.cs525.final_project.framework.dao.AccountDAO;
-import miu.edu.cs.cs525.final_project.framework.dao.AccountDAOImpl;
-import miu.edu.cs.cs525.final_project.framework.dao.CustomerDAO;
-import miu.edu.cs.cs525.final_project.framework.dao.CustomerDAOImpl;
-import miu.edu.cs.cs525.final_project.framework.factory.AccountFactory;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
-import miu.edu.cs.cs525.final_project.framework.model.Report;
-import miu.edu.cs.cs525.final_project.framework.service.CustomerServiceImpl;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
-import miu.edu.cs.cs525.final_project.test.ccard.CardFactory;
 import miu.edu.cs.cs525.final_project.test.ccard.CreditAccountService;
-import miu.edu.cs.cs525.final_project.test.ccard.CreditReport;
 
 /**
  * A basic JFC based application.
@@ -114,6 +107,7 @@ public class CardFrm extends Form
 			rowdata[columnIndex++] = getAccountType();
 			rowdata[columnIndex] = "0";
 			getModel().addRow(rowdata);
+			maxrows++;
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 			//setNewaccount(false);
 		}
@@ -126,6 +120,50 @@ public class CardFrm extends Form
 	public TransactionDialog createWithdrawDialog(Form parent) {
 		return new CreditChargeDialog(this, ccnumber);
 	}
+	public class FormWithdrawButtonAction implements ActionListener{
+
+		public void actionPerformed(ActionEvent event){
+			// get selected name
+			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+			if (selection >=0){
+				String accnr = (String)getModel().getValueAt(selection, 0);
+
+				TransactionDialog wd = createWithdrawDialog(thisFrame);
+				//new BankWithdrawDialog((BankFrm) parent,accnr);
+				wd.setBounds(430, 15, 275, 140);
+				wd.show();
+				Account acct = getCreditAccountService().getAccount(accnr);
+		
+				double newamount = acct.getBalance();
+				getModel().setValueAt(String.valueOf(newamount),selection, columnIndex);
+				if (newamount <0){
+					JOptionPane.showMessageDialog(getJButton_Withdraw(), " Account "+accnr+" : balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		}
+	}
+	public void populateTable() {
+		Collection<Account> accounts = getCreditAccountService().getAllAccounts();
+		
+		rowdata = new Object[8];
+		
+		DefaultTableModel model = getModel();
+		int rowCount =model.getRowCount();
+		for (int i = rowCount - 1; i >= 0; i--) {
+		    model.removeRow(i);
+		}
+		for(Account a :accounts) {
+			
+			columnIndex = 0;
+			rowdata[columnIndex++] = a.getAccountNumber();
+			rowdata[columnIndex++] = a.getCustomer().getName();
+			rowdata[columnIndex++] = "";
+			rowdata[columnIndex++] = "";
+			rowdata[columnIndex] = a.getBalance();
+			getModel().addRow(rowdata);
+			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+		}
+	}
 	public class FormDepositButtonAction implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent event) {
@@ -133,17 +171,19 @@ public class CardFrm extends Form
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 			if (selection >=0){
 				String accnr = (String)getModel().getValueAt(selection, 0);
-				
 				Account acct = getCreditAccountService().getAccount(accnr);
 				Double currentamount = acct.getBalance();
 
 				//Show the dialog for adding deposit amount for the current mane
-				TransactionDialog dep = createDepositDialog(thisFrame);
+				TransactionDialog dep = new CreditDepositDialog((CardFrm)thisFrame, accnr);//;; createDepositDialog(thisFrame);
 				dep.setBounds(430, 15, 275, 140);
 				dep.show();
-				Double deposit = (double)getAmountDeposit();
-				Double newamount=currentamount + deposit;
+//				Double deposit = (double)getAmountDeposit();
+//				Double newamount=currentamount + deposit;
+				double newamount=  acct.getBalance();
 				getModel().setValueAt(String.valueOf(newamount),selection, columnIndex);
+				//populateTable();
+				//getModel().setValueAt(String.valueOf(newamount),selection, columnIndex);
 			}
 		}
 	}

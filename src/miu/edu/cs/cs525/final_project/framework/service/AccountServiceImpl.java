@@ -74,7 +74,7 @@ public class AccountServiceImpl extends Subject implements AccountService {
 
     @Override
     public void calculateInterest() {
-
+    	System.out.println("Insisde Add interest in service");
         Collection<Account> updatedAccounts = new ArrayList<>();
  
         for (Account account: accountDAO.getAccounts()){

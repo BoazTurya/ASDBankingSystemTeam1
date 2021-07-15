@@ -24,14 +24,12 @@ public class JDialog_AddPAcc extends AddAccountDialog
 	//{{DECLARE_CONTROLS
 	JRadioButton JRadioButton_Chk = new FrameRadioButton("Checking");
 	JRadioButton JRadioButton_Sav = new FrameRadioButton("Saving");
-
 	JLabel JLabel7 = new FrameLabel("Acc Nr");
 	JLabel JLabel8 = new FrameLabel("Birthdate");
 	JTextField JTextField_BD = new JTextField();
 	JTextField JTextField_ACNR = new JTextField();
 	
-	public JDialog_AddPAcc(BankFrm parent)
-	{
+	public JDialog_AddPAcc(BankFrm parent){
 		super(parent);
 		parentFrame=parent;
 		setTitle("Add personal account");		
@@ -84,7 +82,7 @@ public class JDialog_AddPAcc extends AddAccountDialog
 	     
 	       Account acct = parentFrame.getBankAccountService().getAccount(JTextField_ACNR.getText());
 			if(acct!=null) {
-				JOptionPane.showMessageDialog(parentFrame, "ppp Account Already Present","Account Already Present",JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(parentFrame, "ppp Account Already Present","Account Alddsddready Present",JOptionPane.WARNING_MESSAGE);
 				parentFrame.setAmountDeposit((long) acct.getBalance());
 			}else {
 				System.out.println("INSINDE CREATE pacc.");

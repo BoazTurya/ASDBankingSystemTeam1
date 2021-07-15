@@ -51,6 +51,7 @@ public abstract class Form extends JFrame{
 	protected JScrollPane JScrollPane1;
 	protected Form thisFrame;
 	protected Object rowdata[];
+	protected int maxrows =0;
 	protected int columnIndex;
 
 	protected JPanel JPanel1 = new JPanel();
@@ -75,14 +76,14 @@ public abstract class Form extends JFrame{
 		rowdata = new Object[8];
 		columnIndex = 0;
 		//setNewaccount(false);
-		
+
 		//accountController = UIControllerImpl.getInstance();
 
 		JPanel1.add(JScrollPane1);
 		JScrollPane1.setBounds(12,92,444,160);
 		JScrollPane1.getViewport().add(JTable1);
 		JTable1.setBounds(0, 0, 420, 0);
-		    
+
 		JPanel1.add(JButton_Deposit);
 		JPanel1.add(getJButton_Withdraw());
 		JPanel1.add(JButton_Exit);
@@ -93,35 +94,11 @@ public abstract class Form extends JFrame{
 		SymWindow aSymWindow = new SymWindow();
 		this.addWindowListener(aSymWindow);
 		JButton_Exit.addActionListener((ActionEvent event)->System.exit(0));
-		
-	}
-	
-	
-	public class FormWithdrawButtonAction implements ActionListener{
-		
-		public void actionPerformed(ActionEvent event){
-			// get selected name
-			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-			if (selection >=0){
-				String accnr = (String)getModel().getValueAt(selection, 0);
 
-				TransactionDialog wd = createWithdrawDialog(thisFrame);
-						//new BankWithdrawDialog((BankFrm) parent,accnr);
-				wd.setBounds(430, 15, 275, 140);
-				wd.show();
-
-				// compute new amount
-				long deposit = getAmountDeposit();
-				String samount = (String)getModel().getValueAt(selection, columnIndex);
-				long currentamount = Long.parseLong(samount);
-				long newamount=currentamount-deposit;
-				getModel().setValueAt(String.valueOf(newamount),selection, columnIndex);
-				if (newamount <0){
-					JOptionPane.showMessageDialog(getJButton_Withdraw(), " Account "+accnr+" : balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		}
 	}
+
+
+
 
 
 	public abstract TransactionDialog createDepositDialog(Form parent);
@@ -130,8 +107,8 @@ public abstract class Form extends JFrame{
 	public class SymWindow extends java.awt.event.WindowAdapter{
 		public void windowClosing(WindowEvent event)
 		{
-	
-				Form_windowClosing(event);
+
+			Form_windowClosing(event);
 		}
 	}
 
@@ -145,15 +122,15 @@ public abstract class Form extends JFrame{
 		} catch (Exception e) {
 		}
 	}
-	
-//	public boolean isNewaccount() {
-//		return newaccount;
-//	}
-//
-//
-//	public void setNewaccount(boolean newaccount) {
-//		this.newaccount = newaccount;
-//	}
+
+	//	public boolean isNewaccount() {
+	//		return newaccount;
+	//	}
+	//
+	//
+	//	public void setNewaccount(boolean newaccount) {
+	//		this.newaccount = newaccount;
+	//	}
 	public Form getThisFrame() {
 		return thisFrame;
 	}
@@ -245,12 +222,12 @@ public abstract class Form extends JFrame{
 	public void setJButton_Withdraw(FrameButton jButton_Withdraw) {
 		JButton_Withdraw = jButton_Withdraw;
 	}
-//	public UIController getAccountController() {
-//		return accountController;
-//	}
-//	public void setAccountController(UIController accountController) {
-//		this.accountController = accountController;
-//	}
+	//	public UIController getAccountController() {
+	//		return accountController;
+	//	}
+	//	public void setAccountController(UIController accountController) {
+	//		this.accountController = accountController;
+	//	}
 
 
 
