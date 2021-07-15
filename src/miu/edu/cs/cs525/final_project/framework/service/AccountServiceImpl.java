@@ -86,4 +86,10 @@ public class AccountServiceImpl extends Subject implements AccountService {
         for(Account updatedAccount : updatedAccounts) accountDAO.updateAccount(updatedAccount);
 
     }
+
+	@Override
+	public Collection<Account> getAllAccounts() {
+		// TODO Auto-generated method stub
+		return accountDAO.getAccounts();
+	}
 }

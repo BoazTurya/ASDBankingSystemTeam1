@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -12,29 +13,45 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import miu.edu.cs.cs525.final_project.bank.ui.BankFrm;
-import miu.edu.cs.cs525.final_project.bank.ui.BankWithdrawDialog;
-import miu.edu.cs.cs525.final_project.ccard.ui.CreditDepositDialog;
-import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
-import miu.edu.cs.cs525.final_project.framework.ui.controller.UIController;
-import miu.edu.cs.cs525.final_project.framework.ui.controller.UIControllerImpl;
-
 public abstract class Form extends JFrame{
-	private UIController accountController;
+	//private UIController accountController;
 	protected String  clientName;
+	protected String email;
+	protected Integer numOfEmployees;
+	public Integer getNumOfEmployees() {
+		return numOfEmployees;
+	}
+	LocalDate birthdate;
+	public LocalDate getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(LocalDate birthdate) {
+		this.birthdate = birthdate;
+	}
+	public void setNumOfEmployees(Integer numOfEmployees) {
+		this.numOfEmployees = numOfEmployees;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	protected String street;
 	protected String city;
 	protected String zip;
-	protected String state;
+	protected String stateName;
 	protected long amountDeposit;
 	protected String accountType;
-	protected boolean newaccount;
+	//protected boolean newaccount;
 	private DefaultTableModel model;
 	public JTable JTable1;
 	protected JScrollPane JScrollPane1;
 	protected Form thisFrame;
 	protected Object rowdata[];
-	protected Integer columnIndex;
+	protected int columnIndex;
 
 	protected JPanel JPanel1 = new JPanel();
 	protected FrameButton JButton_Deposit = new FrameButton("Deposit");
@@ -57,9 +74,9 @@ public abstract class Form extends JFrame{
 		JTable1 = new JTable(getModel());
 		rowdata = new Object[8];
 		columnIndex = 0;
-		setNewaccount(false);
+		//setNewaccount(false);
 		
-		accountController = UIControllerImpl.getInstance();
+		//accountController = UIControllerImpl.getInstance();
 
 		JPanel1.add(JScrollPane1);
 		JScrollPane1.setBounds(12,92,444,160);
@@ -78,29 +95,9 @@ public abstract class Form extends JFrame{
 		JButton_Exit.addActionListener((ActionEvent event)->System.exit(0));
 		
 	}
-	public class FormDepositButtonAction implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			// get selected name
-			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-			if (selection >=0){
-				String accnr = (String)getModel().getValueAt(selection, 0);
-
-				//Show the dialog for adding deposit amount for the current mane
-				TransactionDialog dep = createDepositDialog(thisFrame);
-				dep.setBounds(430, 15, 275, 140);
-				dep.show();
 	
-				// compute new amount
-				Long deposit = getAmountDeposit();
-				String samount = (String)getModel().getValueAt(selection, columnIndex);
-				Long currentamount = Long.parseLong(samount);
-				Long newamount=currentamount + deposit;
-				getModel().setValueAt(String.valueOf(newamount),selection, columnIndex);
-			}
-		}
-	}
-	public class FormWithdrawButtonAction extends WithdrawAction{
+	
+	public class FormWithdrawButtonAction implements ActionListener{
 		
 		public void actionPerformed(ActionEvent event){
 			// get selected name
@@ -149,14 +146,14 @@ public abstract class Form extends JFrame{
 		}
 	}
 	
-	public boolean isNewaccount() {
-		return newaccount;
-	}
-
-
-	public void setNewaccount(boolean newaccount) {
-		this.newaccount = newaccount;
-	}
+//	public boolean isNewaccount() {
+//		return newaccount;
+//	}
+//
+//
+//	public void setNewaccount(boolean newaccount) {
+//		this.newaccount = newaccount;
+//	}
 	public Form getThisFrame() {
 		return thisFrame;
 	}
@@ -216,8 +213,11 @@ public abstract class Form extends JFrame{
 		this.zip = zip;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setStateName(String state) {
+		this.stateName = state;
+	}
+	public String getStateName() {
+		return stateName;
 	}
 
 
@@ -245,12 +245,12 @@ public abstract class Form extends JFrame{
 	public void setJButton_Withdraw(FrameButton jButton_Withdraw) {
 		JButton_Withdraw = jButton_Withdraw;
 	}
-	public UIController getAccountController() {
-		return accountController;
-	}
-	public void setAccountController(UIController accountController) {
-		this.accountController = accountController;
-	}
+//	public UIController getAccountController() {
+//		return accountController;
+//	}
+//	public void setAccountController(UIController accountController) {
+//		this.accountController = accountController;
+//	}
 
 
 

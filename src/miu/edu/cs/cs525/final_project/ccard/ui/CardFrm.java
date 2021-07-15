@@ -2,27 +2,41 @@ package miu.edu.cs.cs525.final_project.ccard.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import miu.edu.cs.cs525.final_project.framework.dao.AccountDAO;
+import miu.edu.cs.cs525.final_project.framework.dao.AccountDAOImpl;
+import miu.edu.cs.cs525.final_project.framework.dao.CustomerDAO;
+import miu.edu.cs.cs525.final_project.framework.dao.CustomerDAOImpl;
+import miu.edu.cs.cs525.final_project.framework.factory.AccountFactory;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
+import miu.edu.cs.cs525.final_project.framework.model.Report;
+import miu.edu.cs.cs525.final_project.framework.service.CustomerServiceImpl;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
-import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
+import miu.edu.cs.cs525.final_project.test.ccard.CardFactory;
+import miu.edu.cs.cs525.final_project.test.ccard.CreditAccountService;
+import miu.edu.cs.cs525.final_project.test.ccard.CreditReport;
 
 /**
  * A basic JFC based application.
  */
 public class CardFrm extends Form
 {
-	String expdate; 
+	LocalDate expdate; 
 	String ccnumber; 
 	JButton JButton_NewCCAccount = new FrameButton("Add Credit-card account");
 	JButton JButton_GenBill = new FrameButton("Generate Monthly bills");
+	CreditAccountService creditAccountService;
 
+	public CreditAccountService getCreditAccountService() {
+		return creditAccountService;
+	}
 	public CardFrm()
 	{
 		setThisFrame(this);
@@ -34,6 +48,8 @@ public class CardFrm extends Form
 		super.getModel().addColumn("Type");
 		super.getModel().addColumn("Balance");
 
+		creditAccountService = new CreditAccountService();
+
 		JButton_GenBill.setBounds(240,20,192,33);
 		JButton_NewCCAccount.setBounds(24,20,192,33);
 		JButton_GenBill.setActionCommand("jbutton");
@@ -43,7 +59,7 @@ public class CardFrm extends Form
 		//SymWindow aSymWindow = new SymWindow();
 		//this.addWindowListener(aSymWindow);
 		JButton_NewCCAccount.addActionListener(new JButtonNewCC_Action());
-		JButton_GenBill.addActionListener((ActionEvent event)->{JDialogGenBill billFrm = new JDialogGenBill();});
+		JButton_GenBill.addActionListener((ActionEvent event)->{JDialogGenBill billFrm = new JDialogGenBill(this, ccnumber);});
 		JButton_Deposit.addActionListener(new FormDepositButtonAction());
 		JButton_Withdraw.addActionListener(new FormWithdrawButtonAction());
 
@@ -73,10 +89,10 @@ public class CardFrm extends Form
 			System.exit(1);
 		}
 	}
-	public String getExpdate() {
+	public LocalDate getExpdate() {
 		return expdate;
 	}
-	public void setExpdate(String expdate) {
+	public void setExpdate(LocalDate expdate) {
 		this.expdate = expdate;
 	}
 	public String getCcnumber() {
@@ -99,21 +115,36 @@ public class CardFrm extends Form
 			rowdata[columnIndex] = "0";
 			getModel().addRow(rowdata);
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-			setNewaccount(false);
-
-			Account acct =	 getAccountController().loadCreditAccount(ccnumber);
-			if(acct!=null) {
-				JOptionPane.showMessageDialog(thisFrame, "Account Already Exists");
-				rowdata[columnIndex] = acct.getBalance();	
-			}
+			//setNewaccount(false);
 		}
 	}
 	@Override
 	public TransactionDialog createDepositDialog(Form parent) {
-		return new CreditDepositDialog(thisFrame, ccnumber);
+		return new CreditDepositDialog(this, ccnumber);
 	}
 	@Override
 	public TransactionDialog createWithdrawDialog(Form parent) {
-		return new CreditChargeDialog(thisFrame, ccnumber);
+		return new CreditChargeDialog(this, ccnumber);
+	}
+	public class FormDepositButtonAction implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			// get selected name
+			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+			if (selection >=0){
+				String accnr = (String)getModel().getValueAt(selection, 0);
+				
+				Account acct = getCreditAccountService().getAccount(accnr);
+				Double currentamount = acct.getBalance();
+
+				//Show the dialog for adding deposit amount for the current mane
+				TransactionDialog dep = createDepositDialog(thisFrame);
+				dep.setBounds(430, 15, 275, 140);
+				dep.show();
+				Double deposit = (double)getAmountDeposit();
+				Double newamount=currentamount + deposit;
+				getModel().setValueAt(String.valueOf(newamount),selection, columnIndex);
+			}
+		}
 	}
 }

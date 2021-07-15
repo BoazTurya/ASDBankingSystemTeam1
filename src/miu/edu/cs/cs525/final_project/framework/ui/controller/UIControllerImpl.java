@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import miu.edu.cs.cs525.final_project.framework.model.Account;
+import miu.edu.cs.cs525.final_project.framework.model.Person;
 import miu.edu.cs.cs525.final_project.framework.service.AccountService;
+import miu.edu.cs.cs525.final_project.test.bank.BankAccount;
 
 public class UIControllerImpl implements UIController {
 	private static UIControllerImpl instance;
@@ -26,7 +28,6 @@ public class UIControllerImpl implements UIController {
 		//accountService.deposit(number, amount);
 		System.out.println("Calling backend: Deposit"+amount+" Account "+number);
 		accounts.get(number).deposit(amount);
-		
 	}
 	@Override
 	public Long withdraw(String number, Long amount) {
@@ -38,25 +39,29 @@ public class UIControllerImpl implements UIController {
 
 	@Override
 	public void addInterest() {
-		//accountService.addInterest();
+		
 		System.out.println("Calling  backend:  Add interest to all");
+		accounts.values().forEach(a->a.addInterest());;
+		//accountService.calculateInterest();
 	}
 	@Override
 	public Account loadAccount(String accountNo) {
 		System.out.println("Calling  backend:  load account");
-		
-		return null;
-		//accountService.getAccount(String accountNo)
+		return accounts.get(accountNo);
+		//return accountService.getAccount(accountNo);
 	}
 	@Override
-	public Account createBankAccount(String name, String street, String city, String state, String zip,LocalDate birthDate, String accountType) {
-		System.out.println("Calling  backend:  create credit Account for "+name+ " "+city);
-		return null;
+	public Account createBankAccount(String aNumber, String name, String street, String city, String state, String zip,LocalDate birthDate, String accountType) {
+		System.out.println("Calling  backend:  create bank Account for "+name+ " "+city);
+		Account acct = new BankAccount(aNumber, new Person( name, null, null,null),null,null,null);
+		accounts.put(aNumber, acct);
+		return acct;
 		//accountService.createAccount(name,street,city,state,zip,aType)
 	}
 	@Override
-	public Account createCreditAccount(String name, String street, String city, String state, String zip,LocalDate expiry, String accountType) {
-		System.out.println("Calling  backend:  create bank Account for "+name+ " "+city);
+	public Account createCreditAccount(String aNumber, String name, String street, String city, String state, String zip, String expiry, String accountType) {
+		System.out.println("Calling  backend:  create credit Account for "+name+ " "+city);
+		
 		return null;
 		//accountService.createAccount(name,street,city,state,zip,aType)
 	}

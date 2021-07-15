@@ -6,7 +6,7 @@ import miu.edu.cs.cs525.final_project.framework.strategy.PaymentStrategy;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public abstract class Account {
+public class Account {
     private String accountNumber;
     private Customer customer;
     private InterestStrategy interestStrategy;
@@ -70,8 +70,14 @@ public abstract class Account {
     public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
         this.paymentStrategy = paymentStrategy;
     }
-
-    public abstract double getBalance();
+////////////////////////////
+    public  double getBalance() {
+    	double balance=0.0;
+    	for(AccountEntry e: accountEntries) {
+    		balance+=e.getAmount();
+    	}
+    	return balance;
+    }
 
     public double totalDeposit(){
         return getAccountEntries().stream().filter(accountEntry -> accountEntry.getDescription() == getTO_ACCOUNT()).mapToDouble(entry -> entry.getAmount()).sum();
