@@ -6,7 +6,8 @@ import miu.edu.cs.cs525.final_project.framework.model.Customer;
 
 import java.time.LocalDate;
 
-public class CustomerServiceImpl implements CustomerService{
+public abstract class CustomerServiceImpl implements CustomerService{
+
     private CustomerDAO customerDAO;
     public CustomerServiceImpl(CustomerDAO customerDAO){
         this.customerDAO = customerDAO;

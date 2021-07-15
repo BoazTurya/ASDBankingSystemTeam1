@@ -1,42 +1,75 @@
 package miu.edu.cs.cs525.final_project.framework.model;
 
-import miu.edu.cs.cs525.final_project.framework.IntrestStrategy;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
-public abstract class Account {
-    private String accountNumber;
+public class Account {
+    private long accountNumber;
     private Customer customer;
     private IntrestStrategy intrestStrategy;
-    private Collection<AccountEntry> accountEntries;
+    private MinPaymentStartegy minPaymentStartegy;
+    private AlertStaretegy alertStaretegy;
+    private Collection<AccountEntry> transaction;
+    private String accountType;
 
-    public Account(String accountNumber, Customer customer) {
+
+    public Account(long accountNumber, Customer customer) {
         this.accountNumber = accountNumber;
         this.customer = customer;
-        accountEntries = new ArrayList<>();
+        transaction = new ArrayList<>();
     }
 
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
 
     public void withdraw(double amount) {
         AccountEntry entry = new AccountEntry(amount, " effecting withdraw");
-        accountEntries.add(entry);
+        transaction.add(entry);
     }
 
     public void deposit(double amount) {
         AccountEntry entry = new AccountEntry(amount, "deposit");
-        accountEntries.add(entry);
+        transaction.add(entry);
     }
 
     public double getBalance() {
         double balance = 0;
-        for (AccountEntry entry : accountEntries) {
+        for (AccountEntry entry : transaction) {
+            System.out.println("doing the collection");
             balance += entry.getAmount();
         }
         return balance;
     }
+    public void setBalance(double amount) {
+        deposit(amount);
 
-    public String getAccountNumber() {
+
+    }
+
+    //Getters & setters
+
+    public MinPaymentStartegy getMinPaymentStartegy() {
+        return minPaymentStartegy;
+    }
+
+    public void setMinPaymentStartegy(MinPaymentStartegy minPaymentStartegy) {
+        this.minPaymentStartegy = minPaymentStartegy;
+    }
+
+    public AlertStaretegy getAlertStaretegy() {
+        return alertStaretegy;
+    }
+
+    public void setAlertStaretegy(AlertStaretegy alertStaretegy) {
+        this.alertStaretegy = alertStaretegy;
+    }
+
+    public long getAccountNumber() {
         return accountNumber;
     }
 
@@ -44,17 +77,32 @@ public abstract class Account {
         return customer;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(long accountNumber) {
         this.accountNumber = accountNumber;
     }
 
-    public Collection<AccountEntry> getAccountEntry() {
-        return accountEntries;
+    public Collection<AccountEntry> getAccountsEntry() {
+        return transaction;
     }
 
     public void addAccountEntry(AccountEntry accountEntry) {
-        this.accountEntries.add(accountEntry);
+        this.transaction.add(accountEntry);
     }
 
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setTransaction(Collection<AccountEntry> transaction) {
+        this.transaction = transaction;
+    }
+
+    public IntrestStrategy getIntrestStrategy() {
+        return intrestStrategy;
+    }
+
+    public void setIntrestStrategy(IntrestStrategy intrestStrategy) {
+        this.intrestStrategy = intrestStrategy;
+    }
 
 }

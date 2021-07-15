@@ -4,9 +4,25 @@ public class Address {
     private String state;
     private String city;
     private String zip;
+    private String Street;
+
+    public Address( String street ,String state, String city, String zip) {
+        this.state = state;
+        this.city = city;
+        this.zip = zip;
+        Street = street;
+    }
 
     public String getState() {
         return state;
+    }
+
+    public String getStreet() {
+        return Street;
+    }
+
+    public void setStreet(String street) {
+        Street = street;
     }
 
     public void setState(String state) {

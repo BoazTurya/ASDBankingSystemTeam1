@@ -40,10 +40,7 @@ public abstract class GenerateReportTempalte implements Command{
         return true;
     }
 
-    @Override
-    public void unexecute() {
 
-    }
 
 
 }

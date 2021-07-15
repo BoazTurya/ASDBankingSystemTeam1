@@ -1,37 +1,18 @@
 package miu.edu.cs.cs525.final_project.framework.service;
 
 
-import miu.edu.cs.cs525.final_project.framework.command.DepositTemplate;
-import miu.edu.cs.cs525.final_project.framework.command.HistoryList;
-import miu.edu.cs.cs525.final_project.framework.command.WithdrawTemplate;
+import miu.edu.cs.cs525.final_project.framework.command.*;
 import miu.edu.cs.cs525.final_project.framework.dao.AccountDAO;
 import miu.edu.cs.cs525.final_project.framework.dao.CustomerDAO;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
-public class AccountServiceImpl implements AccountService{
-    HistoryList historyList ;
-    WithdrawTemplate withdrawTemplate;// withdrawCommand
-    DepositTemplate depositTemplate;//DepositeCommand
-    private CustomerDAO customerDAO;
+public abstract class AccountServiceImpl implements AccountService{
+
+    private  CustomerDAO customerDAO;
     private AccountDAO accountDAO;
-
-    public AccountServiceImpl(HistoryList historyList,CustomerDAO customerDAO, AccountDAO accountDAO){
-      this.historyList=historyList;
-      this.customerDAO = customerDAO;
-      this.accountDAO=accountDAO;
-    }
-
-
-
-
-
-    @Override
-    public Account createAccount(long accountNumber, String customerName) {
-
-        return null;
-    }
 
     @Override
     public Account getAccount(long accountNumber) {
@@ -44,22 +25,22 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public void deposit(long accountNumber, double amount) {
-        depositTemplate.setAccountnumber(accountNumber);
-        depositTemplate.setAccountDAO(accountDAO);
-        depositTemplate.setAmount(amount);
-        historyList.setCommand(depositTemplate);
-
-    }
+    public abstract void  deposit(long accountNumber, double amount) ;
 
     @Override
-    public void withdraw(long accountNumber, double amount) {
-        withdrawTemplate.setAccountnumber(accountNumber);
-        withdrawTemplate.setAccountDAO(accountDAO);
-        withdrawTemplate.setAmount(amount);
-        historyList.setCommand(withdrawTemplate);
+    public abstract void withdraw(long accountNumber, double amount) ;
 
-    }
+    @Override
+    public abstract  String  generateReport() ;
+
+    @Override
+    public abstract void addIntrest() ;
+
+
+    @Override
+    public abstract Account createPersonalAccount(long accountNumber, String name, String email, String street, String city, String state, String zip, LocalDate dob, String accountType) ;
+
+
 
 
 }

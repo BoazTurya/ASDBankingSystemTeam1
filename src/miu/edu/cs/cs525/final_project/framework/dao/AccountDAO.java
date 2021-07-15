@@ -11,4 +11,6 @@ public interface AccountDAO {
     void updateAccount(Account account);
     Account loadAccount(long accountnumber);
     Collection<Account> getAccounts();
+
+
 }

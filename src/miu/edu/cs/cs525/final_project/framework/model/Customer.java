@@ -5,20 +5,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Customer {
-    private String name;
-    private Address address;
-    private String email;
-    private LocalDate dob;
 
     private Collection<Account> accounts;
+    private Address address;
+    private String email;
+    private String name;
 
-    public LocalDate getDob() {
-        return dob;
-    }
 
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
 
     public Customer(String name, Address address, String email) {
         this.name = name;
@@ -57,5 +50,16 @@ public class Customer {
 
     public void addAccount(Account account) {
         this.accounts.add(account);
+    }
+
+
+    public void addEmployee(Person employee){
+        throw new UnsupportedOperationException();
+    }
+    public void removeEmployee(Person employee){
+        throw new UnsupportedOperationException();
+    }
+    public Collection<Customer> getEmployees(String email){
+        throw new UnsupportedOperationException();
     }
 }
