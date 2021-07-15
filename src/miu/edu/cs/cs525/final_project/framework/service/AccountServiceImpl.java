@@ -83,6 +83,7 @@ public class AccountServiceImpl extends Subject implements AccountService {
     public void calculateInterest() {
 
         Collection<Account> updatedAccounts = new ArrayList<>();
+ 
         for (Account account: accountDAO.getAccounts()){
             Account updatedAccount = account.addInterest();
             updatedAccounts.add(updatedAccount);
