@@ -38,4 +38,13 @@ public class AccountEntry {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "[" +
+                "date=" + date +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ']';
+    }
 }

@@ -5,7 +5,6 @@ import miu.edu.cs.cs525.final_project.framework.model.Account;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class AccountDAOImpl implements AccountDAO {
     private Collection<Account> accountCollection;
@@ -20,7 +19,11 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void updateAccount(Account account) {
-        accountCollection = accountCollection.stream().filter(account1 -> account1.getAccountNumber() == account.getAccountNumber()).map(account1 -> account).collect(Collectors.toList());
+        Account accountexist = loadAccount(account.getAccountNumber());
+        if (accountexist != null) {
+            accountCollection.remove(accountexist);
+            accountCollection.add(account);
+        }
     }
 
     @Override

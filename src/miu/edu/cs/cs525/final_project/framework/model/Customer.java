@@ -53,4 +53,13 @@ public abstract class Customer {
     public Collection<Customer> getEmployees(){
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                ", address=" + address +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

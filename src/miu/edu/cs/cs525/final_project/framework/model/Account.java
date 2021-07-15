@@ -3,7 +3,6 @@ package miu.edu.cs.cs525.final_project.framework.model;
 import miu.edu.cs.cs525.final_project.framework.strategy.AlertStrategy;
 import miu.edu.cs.cs525.final_project.framework.strategy.InterestStrategy;
 import miu.edu.cs.cs525.final_project.framework.strategy.PaymentStrategy;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -14,6 +13,8 @@ public abstract class Account {
     private AlertStrategy alertStrategy;
     private PaymentStrategy paymentStrategy;
     private Collection<AccountEntry> accountEntries;
+    protected String TO_ACCOUNT = "deposit";
+    protected String FROM_ACCOUNT = "withdraw";
 
     public Account(String accountNumber, Customer customer, InterestStrategy accountStrategy,AlertStrategy alertStrategy,PaymentStrategy paymentStrategy) {
         this.accountNumber = accountNumber;
@@ -31,7 +32,7 @@ public abstract class Account {
         this.accountNumber = accountNumber;
     }
 
-    public Collection<AccountEntry> getAccountEntry() {
+    public Collection<AccountEntry> getAccountEntries() {
         return accountEntries;
     }
     public void addAccountEntry(AccountEntry accountEntry) {
@@ -70,8 +71,51 @@ public abstract class Account {
         this.paymentStrategy = paymentStrategy;
     }
 
-    public double getBalance(){
-        return this.accountEntries.stream().mapToDouble(AccountEntry::getAmount).sum();
+    public abstract double getBalance();
+
+    public double totalDeposit(){
+        return getAccountEntries().stream().filter(accountEntry -> accountEntry.getDescription() == getTO_ACCOUNT()).mapToDouble(entry -> entry.getAmount()).sum();
+    };
+    public double totalWithdraw(){
+        return getAccountEntries().stream().filter(accountEntry -> accountEntry.getDescription() == getFROM_ACCOUNT()).mapToDouble(entry -> entry.getAmount()).sum();
+    };
+    public double totalInterest(){
+        return getAccountEntries().stream().filter(accountEntry -> accountEntry.getDescription() == "interest").mapToDouble(entry -> entry.getAmount()).sum();
+    }
+    public Account addInterest(){
+        double rate = getInterestStrategy().interestRate();
+        double balance = getBalance();
+        double interest = rate*balance;
+        AccountEntry accountEntry = new AccountEntry(interest,"interest");
+        addAccountEntry(accountEntry);
+        return this;
     }
 
+    public Account withdraw(double amount){
+        AccountEntry accountEntry = new AccountEntry(amount,FROM_ACCOUNT);
+        addAccountEntry(accountEntry);
+        return this;
+    }
+
+    public Account deposit(double amount){
+        AccountEntry accountEntry = new AccountEntry(amount,TO_ACCOUNT);
+        addAccountEntry(accountEntry);
+        return this;
+    }
+
+
+    public String getTO_ACCOUNT(){
+        return TO_ACCOUNT;
+    }
+    public String getFROM_ACCOUNT(){
+        return FROM_ACCOUNT;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountNumber='" + accountNumber + '\'' +
+                ", customer=" + customer +
+                '}';
+    }
 }

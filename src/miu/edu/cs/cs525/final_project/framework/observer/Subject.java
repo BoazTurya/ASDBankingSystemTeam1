@@ -2,10 +2,11 @@ package miu.edu.cs.cs525.final_project.framework.observer;
 
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public abstract class Subject {
-    Collection<Observer> observers;
+    Collection<Observer> observers = new ArrayList<>();
     public void addObserver(Observer observer){
         observers.add(observer);
     }
