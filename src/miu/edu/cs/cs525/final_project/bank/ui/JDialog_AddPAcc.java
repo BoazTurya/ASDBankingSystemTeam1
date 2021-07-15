@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.bank;
+package miu.edu.cs.cs525.final_project.bank.ui;
 /*
 		A basic implementation of the JDialog class.
 */
@@ -39,10 +39,12 @@ public class JDialog_AddPAcc extends AddAccountDialog
 		getContentPane().add(JLabel8);JLabel8.setBounds(12,240,48,24);
 		getContentPane().add(JTextField_ACNR);JTextField_ACNR.setBounds(120, 72, 156, 20);
 		getContentPane().add(JTextField_BD);JTextField_BD.setBounds(120, 240, 156, 20);
-		
+		getContentPane().add(JButton_OK);
+		getContentPane().add(JButton_Cancel);
 		SymMouse aSymMouse = new SymMouse();
 		JRadioButton_Chk.addMouseListener(aSymMouse);
 		JRadioButton_Sav.addMouseListener(aSymMouse);
+		JButton_OK.addActionListener(new JButtonOK_ActionPerformed());
 	}
 
 	class SymMouse extends java.awt.event.MouseAdapter
@@ -87,7 +89,7 @@ public class JDialog_AddPAcc extends AddAccountDialog
 	       }else{
 	    	   parentFrame.setAccountType("S");
 	       }
-	       parentFrame.newaccount=true;
+	      // parentFrame.newaccount=true;
 	       dispose();
 		}	 
 	}
