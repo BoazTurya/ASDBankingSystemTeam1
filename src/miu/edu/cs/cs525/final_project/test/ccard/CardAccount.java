@@ -8,12 +8,12 @@ import miu.edu.cs.cs525.final_project.framework.strategy.PaymentStrategy;
 
 import java.time.LocalDate;
 
-public class CreditAccount extends Account {
+public class CardAccount extends Account {
     private LocalDate expirationDate;
     private double lastMonthDeposit;
     private double lastMonthWithdraw;
     private double lastMonthInterest;
-    public CreditAccount(String accountNumber, Customer customer, InterestStrategy accountStrategy, AlertStrategy alertStrategy, PaymentStrategy paymentStrategy) {
+    public CardAccount(String accountNumber, Customer customer, InterestStrategy accountStrategy, AlertStrategy alertStrategy, PaymentStrategy paymentStrategy) {
         super(accountNumber, customer, accountStrategy, alertStrategy, paymentStrategy);
         TO_ACCOUNT = "payment";
         FROM_ACCOUNT = "charge";

@@ -8,6 +8,7 @@ public abstract class Customer {
     private Address address;
     private String email;
     private String name;
+    protected String customerType;
 
 
     public Customer(String name,Address address,String email){
@@ -61,5 +62,9 @@ public abstract class Customer {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public String getCustomerType() {
+        return customerType;
     }
 }

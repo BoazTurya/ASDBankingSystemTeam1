@@ -8,6 +8,7 @@ public class Person extends Customer {
     public Person(String name, Address address, String email,LocalDate dob) {
         super(name, address, email);
         this.dob = dob;
+        customerType = "Person";
     }
 
     public LocalDate getDob() {

@@ -10,6 +10,7 @@ public class Organization extends Customer {
     public Organization(String name, Address address, String email,int numberOfEmployees) {
         super(name, address, email);
         this.numberOfEmployees = numberOfEmployees;
+        customerType = "Org";
     }
 
     public void addEmployee(Person employee){

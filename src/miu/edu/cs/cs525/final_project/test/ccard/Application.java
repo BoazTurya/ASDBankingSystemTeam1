@@ -16,7 +16,7 @@ public class Application {
         CustomerDAO customerDAO = new CustomerDAOImpl();
         CustomerServiceImpl customerService = new CustomerServiceImpl(customerDAO);
         AccountFactory accountFactory = new CardFactory();
-        Report report = new CreditReport();
+        Report report = new CardReport();
 
         CardAccountService creditAccountService = new CardAccountServiceImpl(accountDAO,customerDAO,customerService,accountFactory,report);
 

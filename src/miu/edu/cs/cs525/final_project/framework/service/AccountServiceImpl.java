@@ -12,6 +12,8 @@ import miu.edu.cs.cs525.final_project.framework.observer.Subject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AccountServiceImpl extends Subject implements AccountService {
     protected AccountDAO accountDAO;
@@ -52,6 +54,11 @@ public class AccountServiceImpl extends Subject implements AccountService {
     public Report generateReport(String accountNumber){
         Account account = accountDAO.loadAccount(accountNumber);
         return report.generateReport(account,accountDAO);
+    }
+
+    @Override
+    public List<Account> getAllAccounts() {
+        return accountDAO.getAccounts().stream().collect(Collectors.toList());
     }
 
     public final double getBalance(String accountNumber){

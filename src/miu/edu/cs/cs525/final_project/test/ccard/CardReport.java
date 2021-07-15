@@ -6,7 +6,7 @@ import miu.edu.cs.cs525.final_project.framework.model.AccountEntry;
 import miu.edu.cs.cs525.final_project.framework.model.Report;
 import miu.edu.cs.cs525.final_project.test.bank.BankAccountReport;
 
-public class CreditReport extends Report {
+public class CardReport extends Report {
 
     @Override
     public Report createReport(Account account, AccountDAO accountDAO) {
@@ -17,9 +17,9 @@ public class CreditReport extends Report {
 
         account = account.addInterest();
 
-        double depositSum = account.totalDeposit() - ((CreditAccount) account).getLastMonthDeposit();
-        double withdrawSum = account.totalWithdraw() - ((CreditAccount) account).getLastMonthWithdraw();
-        double interestSum = account.totalInterest() - ((CreditAccount) account).getLastMonthInterest();
+        double depositSum = account.totalDeposit() - ((CardAccount) account).getLastMonthDeposit();
+        double withdrawSum = account.totalWithdraw() - ((CardAccount) account).getLastMonthWithdraw();
+        double interestSum = account.totalInterest() - ((CardAccount) account).getLastMonthInterest();
 
         double paymentRate = account.getPaymentStrategy().minimumPayment();
         double totalDue = paymentRate * account.getBalance();
@@ -30,9 +30,9 @@ public class CreditReport extends Report {
         report += "\nbalance " + account.getBalance();
         report += "\ntotal due " + totalDue;
 
-        ((CreditAccount) account).setLastMonthDeposit(depositSum);
-        ((CreditAccount) account).setLastMonthWithdraw(withdrawSum);
-        ((CreditAccount) account).setLastMonthInterest(interestSum);
+        ((CardAccount) account).setLastMonthDeposit(depositSum);
+        ((CardAccount) account).setLastMonthWithdraw(withdrawSum);
+        ((CardAccount) account).setLastMonthInterest(interestSum);
 
         accountDAO.updateAccount(account);
         Report accountReport = new BankAccountReport();
