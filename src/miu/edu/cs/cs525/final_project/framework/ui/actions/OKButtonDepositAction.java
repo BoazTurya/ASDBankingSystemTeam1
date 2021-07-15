@@ -20,8 +20,8 @@ public class OKButtonDepositAction implements ActionListener {
 		String accountNo = transactionDialog.getJTextField_NAME().getText();
 		Long amount = Long.parseLong(transactionDialog.getJTextField_AMOUNT().getText());
 				
-		UIControllerImpl.getInstance().deposit(accountNo, amount);
-		
+		parentFrame.getAccountController().deposit(accountNo, amount);
+		transactionDialog.dispose();		
 	}
 
 }

@@ -23,7 +23,8 @@ public class OKButtonWithdrawAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String accountNo= depositDialog.getJTextField_NAME().getText();
 		Long amount = Long.parseLong(depositDialog.getJTextField_AMOUNT().getText());	
-		parentFrame.getAccountController().withdraw(accountNo, amount);		
+		parentFrame.getAccountController().withdraw(accountNo, amount);	
+		depositDialog.dispose();
 	}
 
 }

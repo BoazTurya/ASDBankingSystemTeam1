@@ -26,7 +26,7 @@ public abstract class Form extends JFrame{
 	protected String city;
 	protected String zip;
 	protected String state;
-	protected Long amountDeposit;
+	protected long amountDeposit;
 	protected String accountType;
 	protected boolean newaccount;
 	private DefaultTableModel model;
@@ -95,7 +95,7 @@ public abstract class Form extends JFrame{
 				Long deposit = getAmountDeposit();
 				String samount = (String)getModel().getValueAt(selection, columnIndex);
 				Long currentamount = Long.parseLong(samount);
-				Long newamount=currentamount+deposit;
+				Long newamount=currentamount + deposit;
 				getModel().setValueAt(String.valueOf(newamount),selection, columnIndex);
 			}
 		}

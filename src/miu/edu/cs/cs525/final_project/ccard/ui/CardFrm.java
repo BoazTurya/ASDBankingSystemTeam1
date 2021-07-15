@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
@@ -36,7 +37,6 @@ public class CardFrm extends Form
 		JButton_GenBill.setBounds(240,20,192,33);
 		JButton_NewCCAccount.setBounds(24,20,192,33);
 		JButton_GenBill.setActionCommand("jbutton");
-		JButton_GenBill.setActionCommand("jbutton");
 		super.JPanel1.add(JButton_NewCCAccount);
 		super.JPanel1.add(JButton_GenBill);
 
@@ -64,7 +64,6 @@ public class CardFrm extends Form
 			} 
 			catch (Exception e) { 
 			}
-
 			//Create a new instance of our application's frame, and make it visible.
 			(new CardFrm()).setVisible(true);
 		} 
@@ -92,31 +91,29 @@ public class CardFrm extends Form
 			ccac.setBounds(450, 20, 300, 380);
 			ccac.show();
 
-			if (isNewaccount()){
-				// add row to table
-				rowdata[columnIndex++] = getClientName();
-				rowdata[columnIndex++] = ccnumber;
-				rowdata[columnIndex++] = expdate;
-				rowdata[columnIndex++] = getAccountType();
-				rowdata[columnIndex] = "0";
-				getModel().addRow(rowdata);
-				JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-				setNewaccount(false);
-			}
 			columnIndex = 0;
+			rowdata[columnIndex++] = ccnumber;
+			rowdata[columnIndex++] = getClientName();
+			rowdata[columnIndex++] = expdate;
+			rowdata[columnIndex++] = getAccountType();
+			rowdata[columnIndex] = "0";
+			getModel().addRow(rowdata);
+			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+			setNewaccount(false);
+
+			Account acct =	 getAccountController().loadCreditAccount(ccnumber);
+			if(acct!=null) {
+				JOptionPane.showMessageDialog(thisFrame, "Account Already Exists");
+				rowdata[columnIndex] = acct.getBalance();	
+			}
 		}
 	}
 	@Override
 	public TransactionDialog createDepositDialog(Form parent) {
-		// TODO Auto-generated method stub
 		return new CreditDepositDialog(thisFrame, ccnumber);
 	}
 	@Override
 	public TransactionDialog createWithdrawDialog(Form parent) {
-		// TODO Auto-generated method stub
 		return new CreditChargeDialog(thisFrame, ccnumber);
 	}
-
 }
-
-

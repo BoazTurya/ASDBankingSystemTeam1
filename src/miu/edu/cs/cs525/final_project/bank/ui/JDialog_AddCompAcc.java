@@ -26,6 +26,8 @@ public class JDialog_AddCompAcc extends AddAccountDialog{
 		super(parent);
 		parentframe=parent;
 		setTitle("Add compamy account");
+		setBounds(450, 20, 300, 330);
+		show();
 	
 		getContentPane().add(JRadioButton_Chk);JRadioButton_Chk.setBounds(36,12,84,24);
 		getContentPane().add(JRadioButton_Sav);JRadioButton_Sav.setBounds(180,12,84,24);
