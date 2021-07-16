@@ -1,16 +1,14 @@
-package miu.edu.cs.cs525.final_project.framework.ui.actions;
+package miu.edu.cs.cs525.final_project.bank.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
-import miu.edu.cs.cs525.final_project.framework.ui.controller.UIControllerImpl;
 
-public class OKButtonDepositAction implements ActionListener {
+public class OKBankButtonDepositAction implements ActionListener {
 	TransactionDialog transactionDialog;
-	Form parentFrame;
-	public OKButtonDepositAction(Form parentFrame,TransactionDialog transactionDialog) {
+	BankFrm parentFrame;
+	public OKBankButtonDepositAction(BankFrm parentFrame,TransactionDialog transactionDialog) {
 		this.transactionDialog = transactionDialog;	
 		this.parentFrame = parentFrame;
 	}
@@ -19,8 +17,10 @@ public class OKButtonDepositAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String accountNo = transactionDialog.getJTextField_NAME().getText();
 		Long amount = Long.parseLong(transactionDialog.getJTextField_AMOUNT().getText());
-				
-		parentFrame.getAccountController().deposit(accountNo, amount);
+		System.out.println("ACCOUNT NUMBER " + accountNo);
+		System.out.println("AMOUNT " + amount);
+		parentFrame.setAmountDeposit(amount);
+		parentFrame.getBankAccountService().deposit(accountNo, amount);
 		transactionDialog.dispose();		
 	}
 

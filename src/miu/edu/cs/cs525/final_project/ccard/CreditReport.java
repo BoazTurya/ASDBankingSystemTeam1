@@ -1,10 +1,10 @@
-package miu.edu.cs.cs525.final_project.test.ccard;
+package miu.edu.cs.cs525.final_project.ccard;
 
+import miu.edu.cs.cs525.final_project.bank.BankAccountReport;
 import miu.edu.cs.cs525.final_project.framework.dao.AccountDAO;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.model.AccountEntry;
 import miu.edu.cs.cs525.final_project.framework.model.Report;
-import miu.edu.cs.cs525.final_project.test.bank.BankAccountReport;
 
 public class CreditReport extends Report {
 

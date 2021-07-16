@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.test.bank;
+package miu.edu.cs.cs525.final_project.bank;
 
 import miu.edu.cs.cs525.final_project.framework.strategy.InterestStrategy;
 

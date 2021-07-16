@@ -2,63 +2,37 @@ package miu.edu.cs.cs525.final_project.ccard.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.Collection;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
+import miu.edu.cs.cs525.final_project.ccard.CreditAccount;
+import miu.edu.cs.cs525.final_project.ccard.CreditAccountService;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
-import miu.edu.cs.cs525.final_project.framework.ui.actions.WithdrawAction;
 
 /**
  * A basic JFC based application.
  */
 public class CardFrm extends Form
 {
-	String expdate; 
+	LocalDate expdate; 
 	String ccnumber; 
 	JButton JButton_NewCCAccount = new FrameButton("Add Credit-card account");
 	JButton JButton_GenBill = new FrameButton("Generate Monthly bills");
+	CreditAccountService creditAccountService;
 
-	public CardFrm()
-	{
-		setThisFrame(this);
-		setTitle("Credit-card processing Application.");
-
-		super.getModel().addColumn("CC number");
-		super.getModel().addColumn("Name");
-		super.getModel().addColumn("Exp date");
-		super.getModel().addColumn("Type");
-		super.getModel().addColumn("Balance");
-
-		JButton_GenBill.setBounds(240,20,192,33);
-		JButton_NewCCAccount.setBounds(24,20,192,33);
-		JButton_GenBill.setActionCommand("jbutton");
-		super.JPanel1.add(JButton_NewCCAccount);
-		super.JPanel1.add(JButton_GenBill);
-
-		//SymWindow aSymWindow = new SymWindow();
-		//this.addWindowListener(aSymWindow);
-		JButton_NewCCAccount.addActionListener(new JButtonNewCC_Action());
-		JButton_GenBill.addActionListener((ActionEvent event)->{JDialogGenBill billFrm = new JDialogGenBill();});
-		JButton_Deposit.addActionListener(new FormDepositButtonAction());
-		JButton_Withdraw.addActionListener(new FormWithdrawButtonAction());
-
+	public CardFrm() {
+		buildGUI();
+		
 	}
-	/*****************************************************
-	 * The entry point for this application.
-	 * Sets the Look and Feel to the System Look and Feel.
-	 * Creates a new JFrame1 and makes it visible.
-	 *****************************************************/
-	static public void main(String args[])
-	{
+	static public void main(String args[]){
 		try {
-			// Add the following code if you want the Look and Feel
-			// to be set to the Look and Feel of the native system.
-
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			} 
@@ -73,10 +47,10 @@ public class CardFrm extends Form
 			System.exit(1);
 		}
 	}
-	public String getExpdate() {
+	public LocalDate getExpdate() {
 		return expdate;
 	}
-	public void setExpdate(String expdate) {
+	public void setExpdate(LocalDate expdate) {
 		this.expdate = expdate;
 	}
 	public String getCcnumber() {
@@ -84,6 +58,9 @@ public class CardFrm extends Form
 	}
 	public void setCcnumber(String ccnumber) {
 		this.ccnumber = ccnumber;
+	}
+	public CreditAccountService getCreditAccountService() {
+		return creditAccountService;
 	}
 	class JButtonNewCC_Action implements ActionListener{
 		public void actionPerformed(ActionEvent event){
@@ -98,22 +75,106 @@ public class CardFrm extends Form
 			rowdata[columnIndex++] = getAccountType();
 			rowdata[columnIndex] = "0";
 			getModel().addRow(rowdata);
+			maxrows++;
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-			setNewaccount(false);
+			//setNewaccount(false);
+		}
+	}
+	public class FormWithdrawButtonAction implements ActionListener{
 
-			Account acct =	 getAccountController().loadCreditAccount(ccnumber);
-			if(acct!=null) {
-				JOptionPane.showMessageDialog(thisFrame, "Account Already Exists");
-				rowdata[columnIndex] = acct.getBalance();	
+		public void actionPerformed(ActionEvent event){
+			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+			if (selection >=0){
+				String ccnr = (String)getModel().getValueAt(selection, 0);
+
+				TransactionDialog wd = new CreditChargeDialog((CardFrm)getThisFrame(), ccnr);
+				wd.setBounds(430, 15, 275, 140);wd.show();
+						
+				double newamount = getCreditAccountService().getAccount(ccnr).getBalance();
+		
+				populateModel();
+			}
+		}
+	}
+	public void populateModel() {
+		Collection<Account> accounts = getCreditAccountService().getAllAccounts();
+		
+		rowdata = new Object[8];
+		
+		DefaultTableModel model = getModel();
+		int rowCount =model.getRowCount();
+		for (int i = rowCount - 1; i >= 0; i--) {
+		    model.removeRow(i);
+		}
+		for(Account a :accounts) {
+			CreditAccount b = (CreditAccount)a;
+			columnIndex = 0;
+			rowdata[columnIndex++] = b.getAccountNumber();
+			rowdata[columnIndex++] = b.getCustomer().getName();
+			rowdata[columnIndex++] = b.getExpirationDate();
+			rowdata[columnIndex++] = "";
+			rowdata[columnIndex] = b.getBalance();
+			getModel().addRow(rowdata);
+			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+		}
+	}
+	public class FormDepositButtonAction implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+			if (selection >=0){
+				String accnr = (String)getModel().getValueAt(selection, 0);
+				Account acct = getCreditAccountService().getAccount(accnr);
+
+				TransactionDialog dep = new CreditDepositDialog((CardFrm)thisFrame, accnr);
+				dep.setBounds(430, 15, 275, 140); dep.show();
+				populateModel();
+			}
+		}
+	}
+	public class GenerateBillAction implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+			if (selection >=0){
+				String accnr = (String)getModel().getValueAt(selection, 0);
+				Account acct = getCreditAccountService().getAccount(accnr);
+				JDialogGenBill billFrm = new JDialogGenBill((CardFrm)thisFrame, accnr);
 			}
 		}
 	}
 	@Override
-	public TransactionDialog createDepositDialog(Form parent) {
-		return new CreditDepositDialog(thisFrame, ccnumber);
+	protected void buildModel() { 
+		setThisFrame(this);
+		setTitle("Credit-card processing Application.");
+
+		getModel().addColumn("CC number");
+		getModel().addColumn("Name");
+		getModel().addColumn("Exp date");
+		getModel().addColumn("Type");
+		getModel().addColumn("Balance");
+	}
+	
+	@Override
+	protected void hook() {
+		// TODO Auto-generated method stub
+		
 	}
 	@Override
-	public TransactionDialog createWithdrawDialog(Form parent) {
-		return new CreditChargeDialog(thisFrame, ccnumber);
+	protected void buildButtons() {
+		JButton_GenBill.setBounds(240,20,192,33);
+		JButton_NewCCAccount.setBounds(24,20,192,33);
+		JButton_GenBill.setActionCommand("jbutton");
+		JButton_NewCCAccount.addActionListener(new JButtonNewCC_Action());
+		JButton_GenBill.addActionListener(new GenerateBillAction());
+		JButton_Deposit.addActionListener(new FormDepositButtonAction());
+		JButton_Withdraw.addActionListener(new FormWithdrawButtonAction());
+		JPanel1.add(JButton_NewCCAccount);
+		JPanel1.add(JButton_GenBill);
+	}
+
+	@Override
+	protected void initializeAccountService() { 
+		creditAccountService = new CreditAccountService();
 	}
 }

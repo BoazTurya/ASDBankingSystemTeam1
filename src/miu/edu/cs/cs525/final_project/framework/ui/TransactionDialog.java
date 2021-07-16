@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 
 public abstract class TransactionDialog extends JDialog {
 	protected Form parentFrame;
-	protected JLabel JLabel1 = new FrameLabel("Name");
+	protected JLabel JLabel1 = new FrameLabel("Account Number");
 	protected JLabel JLabel2 = new FrameLabel("Amount");
 	
 	protected JTextField JTextField_NAME = new FrameTextField();

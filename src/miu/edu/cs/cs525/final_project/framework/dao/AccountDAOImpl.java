@@ -28,9 +28,14 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public Account loadAccount(String accountnumber) {
-        Account account = null;
-        account = accountCollection.stream().filter(acc -> acc.getAccountNumber() == accountnumber).findAny().get();
-        return account;
+//        Account account = null;
+//        account = accountCollection.stream().filter(acc -> acc.getAccountNumber() == accountnumber).findAny().get();
+        for(Account account: accountCollection) {
+        	if(account.getAccountNumber().equals(accountnumber)) {
+        		return account;
+        	}
+        }
+        return null;
     }
 
     @Override

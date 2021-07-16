@@ -74,7 +74,7 @@ public class AccountServiceImpl extends Subject implements AccountService {
 
     @Override
     public void calculateInterest() {
-
+    	System.out.println("Insisde Add interest in service");
         Collection<Account> updatedAccounts = new ArrayList<>();
  
         for (Account account: accountDAO.getAccounts()){
@@ -86,4 +86,10 @@ public class AccountServiceImpl extends Subject implements AccountService {
         for(Account updatedAccount : updatedAccounts) accountDAO.updateAccount(updatedAccount);
 
     }
+
+	@Override
+	public Collection<Account> getAllAccounts() {
+		// TODO Auto-generated method stub
+		return accountDAO.getAccounts();
+	}
 }
