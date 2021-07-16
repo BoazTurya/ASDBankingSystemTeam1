@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.bank;
+package miu.edu.cs.cs525.final_project.bank.backend;
 
 import miu.edu.cs.cs525.final_project.framework.dao.AccountDAO;
 import miu.edu.cs.cs525.final_project.framework.model.Account;

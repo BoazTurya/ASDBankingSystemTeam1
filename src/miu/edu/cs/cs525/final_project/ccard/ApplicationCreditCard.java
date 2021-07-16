@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.ccard.ui;
+package miu.edu.cs.cs525.final_project.ccard;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +9,14 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-import miu.edu.cs.cs525.final_project.ccard.CreditAccount;
-import miu.edu.cs.cs525.final_project.ccard.CreditAccountService;
+import miu.edu.cs.cs525.final_project.ccard.backend.CreditAccount;
+import miu.edu.cs.cs525.final_project.ccard.backend.CreditAccountService;
+import miu.edu.cs.cs525.final_project.ccard.backend.InterestStrategyGOLD;
+import miu.edu.cs.cs525.final_project.ccard.backend.InterestStrategySILVER;
+import miu.edu.cs.cs525.final_project.ccard.ui.CreditChargeDialog;
+import miu.edu.cs.cs525.final_project.ccard.ui.CreditDepositDialog;
+import miu.edu.cs.cs525.final_project.ccard.ui.JDialogGenBill;
+import miu.edu.cs.cs525.final_project.ccard.ui.JDialog_AddCCAccount;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
@@ -19,7 +25,7 @@ import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
 /**
  * A basic JFC based application.
  */
-public class CardFrm extends Form
+public class ApplicationCreditCard extends Form
 {
 	LocalDate expdate; 
 	String ccnumber; 
@@ -27,7 +33,7 @@ public class CardFrm extends Form
 	JButton JButton_GenBill = new FrameButton("Generate Monthly bills");
 	CreditAccountService creditAccountService;
 
-	public CardFrm() {
+	public ApplicationCreditCard() {
 		buildGUI();
 		
 	}
@@ -39,7 +45,7 @@ public class CardFrm extends Form
 			catch (Exception e) { 
 			}
 			//Create a new instance of our application's frame, and make it visible.
-			(new CardFrm()).setVisible(true);
+			(new ApplicationCreditCard()).setVisible(true);
 		} 
 		catch (Throwable t) {
 			t.printStackTrace();
@@ -64,20 +70,9 @@ public class CardFrm extends Form
 	}
 	class JButtonNewCC_Action implements ActionListener{
 		public void actionPerformed(ActionEvent event){
-			JDialog_AddCCAccount ccac = new JDialog_AddCCAccount((CardFrm) getThisFrame());
-			ccac.setBounds(450, 20, 300, 380);
-			ccac.show();
-
-			columnIndex = 0;
-			rowdata[columnIndex++] = ccnumber;
-			rowdata[columnIndex++] = getClientName();
-			rowdata[columnIndex++] = expdate;
-			rowdata[columnIndex++] = getAccountType();
-			rowdata[columnIndex] = "0";
-			getModel().addRow(rowdata);
-			maxrows++;
-			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-			//setNewaccount(false);
+			JDialog_AddCCAccount ccac = new JDialog_AddCCAccount((ApplicationCreditCard) getThisFrame());
+			ccac.setBounds(450, 20, 300, 380);ccac.show();
+			populateModel();
 		}
 	}
 	public class FormWithdrawButtonAction implements ActionListener{
@@ -87,11 +82,22 @@ public class CardFrm extends Form
 			if (selection >=0){
 				String ccnr = (String)getModel().getValueAt(selection, 0);
 
-				TransactionDialog wd = new CreditChargeDialog((CardFrm)getThisFrame(), ccnr);
+				TransactionDialog wd = new CreditChargeDialog((ApplicationCreditCard)getThisFrame(), ccnr);
 				wd.setBounds(430, 15, 275, 140);wd.show();
 						
-				double newamount = getCreditAccountService().getAccount(ccnr).getBalance();
-		
+				populateModel();
+			}
+		}
+	}
+	
+	public class FormDepositButtonAction implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+			if (selection >=0){
+				String accnr = (String)getModel().getValueAt(selection, 0);
+				TransactionDialog dep = new CreditDepositDialog((ApplicationCreditCard)thisFrame, accnr);
+				dep.setBounds(430, 15, 275, 140); dep.show();
 				populateModel();
 			}
 		}
@@ -109,27 +115,16 @@ public class CardFrm extends Form
 		for(Account a :accounts) {
 			CreditAccount b = (CreditAccount)a;
 			columnIndex = 0;
+			String ctype = b.getInterestStrategy().getClass().equals(InterestStrategyGOLD.class)?"GOLD":
+				b.getInterestStrategy().getClass().equals(InterestStrategySILVER.class)?"SILVER":"BRONZE";
+			
 			rowdata[columnIndex++] = b.getAccountNumber();
 			rowdata[columnIndex++] = b.getCustomer().getName();
 			rowdata[columnIndex++] = b.getExpirationDate();
-			rowdata[columnIndex++] = "";
+			rowdata[columnIndex++] = ctype;
 			rowdata[columnIndex] = b.getBalance();
 			getModel().addRow(rowdata);
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
-		}
-	}
-	public class FormDepositButtonAction implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
-			if (selection >=0){
-				String accnr = (String)getModel().getValueAt(selection, 0);
-				Account acct = getCreditAccountService().getAccount(accnr);
-
-				TransactionDialog dep = new CreditDepositDialog((CardFrm)thisFrame, accnr);
-				dep.setBounds(430, 15, 275, 140); dep.show();
-				populateModel();
-			}
 		}
 	}
 	public class GenerateBillAction implements ActionListener{
@@ -139,7 +134,7 @@ public class CardFrm extends Form
 			if (selection >=0){
 				String accnr = (String)getModel().getValueAt(selection, 0);
 				Account acct = getCreditAccountService().getAccount(accnr);
-				JDialogGenBill billFrm = new JDialogGenBill((CardFrm)thisFrame, accnr);
+				JDialogGenBill billFrm = new JDialogGenBill((ApplicationCreditCard)thisFrame, accnr);
 			}
 		}
 	}

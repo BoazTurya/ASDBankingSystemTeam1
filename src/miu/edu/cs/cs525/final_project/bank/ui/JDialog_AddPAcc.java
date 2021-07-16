@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import miu.edu.cs.cs525.final_project.bank.ApplicationBank;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.ui.AddAccountDialog;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameLabel;
@@ -20,7 +21,7 @@ import miu.edu.cs.cs525.final_project.framework.ui.FrameRadioButton;
 
 public class JDialog_AddPAcc extends AddAccountDialog
 {
-    private BankFrm parentFrame;
+    private ApplicationBank parentFrame;
 	//{{DECLARE_CONTROLS
 	JRadioButton JRadioButton_Chk = new FrameRadioButton("Checking");
 	JRadioButton JRadioButton_Sav = new FrameRadioButton("Saving");
@@ -29,7 +30,7 @@ public class JDialog_AddPAcc extends AddAccountDialog
 	JTextField JTextField_BD = new JTextField();
 	JTextField JTextField_ACNR = new JTextField();
 	
-	public JDialog_AddPAcc(BankFrm parent){
+	public JDialog_AddPAcc(ApplicationBank parent){
 		super(parent);
 		parentFrame=parent;
 		setTitle("Add personal account");		
@@ -69,35 +70,26 @@ public class JDialog_AddPAcc extends AddAccountDialog
 
 	class JButtonOK_ActionPerformed implements ActionListener {
 		public void actionPerformed(ActionEvent event){
-	       parentFrame.setAccountnr(JTextField_ACNR.getText());
-	       parentFrame.setClientName(JTextField_NAME.getText());
-	       parentFrame.setEmail(JTextField_Email.getText());
-	       parentFrame.setStreet(JTextField_STR.getText());
-	       parentFrame.setCity(JTextField_CT.getText());
-	       parentFrame.setStateName(JTextField_ST.getText());
-	       parentFrame.setZip(JTextField_ZIP.getText());
-	       parentFrame.setAmountDeposit(0L);
-	       parentFrame.setBirthdate(LocalDate.parse(JTextField_BD.getText(),DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-	       parentFrame.setAccountType(JRadioButton_Chk.isSelected()?"checking":"saving");
-	     
 	       Account acct = parentFrame.getBankAccountService().getAccount(JTextField_ACNR.getText());
 			if(acct!=null) {
 				JOptionPane.showMessageDialog(parentFrame, "ppp Account Already Present","Account Alddsddready Present",JOptionPane.WARNING_MESSAGE);
-				parentFrame.setAmountDeposit((long) acct.getBalance());
+				
 			}else {
 				System.out.println("INSINDE CREATE pacc.");
-				parentFrame.getBankAccountService().createPersonalAccount(parentFrame.getAccountnr(),
-																		parentFrame.getClientName(),
-																		parentFrame.getEmail(),																	
-																		parentFrame.getStreet(),
-																		parentFrame.getCity(),
-																		parentFrame.getStateName(),
-																		parentFrame.getZip(),
-																		parentFrame.getBirthdate(),
-																		parentFrame.getAccountType()																		
+				parentFrame.getBankAccountService().createPersonalAccount(JTextField_ACNR.getText(),
+																		JTextField_NAME.getText(),
+																		JTextField_Email.getText(),																	
+																		JTextField_STR.getText(),
+																		JTextField_CT.getText(),
+																		JTextField_ST.getText(),
+																		JTextField_ZIP.getText(),
+																		LocalDate.parse(JTextField_BD.getText(),DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+																		JRadioButton_Chk.isSelected()?"checking":"saving"																		
 																		);
+
 				System.out.println(parentFrame.bankAccountService.getAllAccounts());
 			}
+			parentFrame.populateModel();
 			dispose();
 		}	 
 	}

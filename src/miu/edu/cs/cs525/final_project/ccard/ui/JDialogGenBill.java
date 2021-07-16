@@ -10,11 +10,13 @@ import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import miu.edu.cs.cs525.final_project.ccard.ApplicationCreditCard;
+
 public class JDialogGenBill extends JDialog{
     String billstring;
-    CardFrm parent;
+    ApplicationCreditCard parent;
     
-	public JDialogGenBill(CardFrm parent,String acctNumber){
+	public JDialogGenBill(ApplicationCreditCard parent,String acctNumber){
 		super(parent);
 		this.parent = parent;
 		getContentPane().setLayout(null);

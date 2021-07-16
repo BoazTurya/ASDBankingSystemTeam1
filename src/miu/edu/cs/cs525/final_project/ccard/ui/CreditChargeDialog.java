@@ -1,11 +1,12 @@
 package miu.edu.cs.cs525.final_project.ccard.ui;
 
+import miu.edu.cs.cs525.final_project.ccard.ApplicationCreditCard;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
 import miu.edu.cs.cs525.final_project.framework.ui.actions.CancelDialogAction;
 
 
 public class CreditChargeDialog extends TransactionDialog{
-	public CreditChargeDialog(CardFrm parent, String anumber){
+	public CreditChargeDialog(ApplicationCreditCard parent, String anumber){
 		super(parent);
 		setTitle("Charge Credit Account");
 		

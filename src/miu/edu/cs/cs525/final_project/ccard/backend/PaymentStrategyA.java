@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.ccard;
+package miu.edu.cs.cs525.final_project.ccard.backend;
 
 import miu.edu.cs.cs525.final_project.framework.strategy.PaymentStrategy;
 

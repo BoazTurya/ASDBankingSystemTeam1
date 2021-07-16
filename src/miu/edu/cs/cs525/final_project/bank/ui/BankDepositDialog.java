@@ -1,11 +1,12 @@
 package miu.edu.cs.cs525.final_project.bank.ui;
 
+import miu.edu.cs.cs525.final_project.bank.ApplicationBank;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
 import miu.edu.cs.cs525.final_project.framework.ui.actions.CancelDialogAction;
 
 public class BankDepositDialog extends TransactionDialog{
   
-	public BankDepositDialog(BankFrm parent, String accnr){
+	public BankDepositDialog(ApplicationBank parent, String accnr){
 		super(parent);
 		setTitle("Bank Deposit dialog");
 		

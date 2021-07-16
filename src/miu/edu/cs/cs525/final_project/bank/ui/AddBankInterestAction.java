@@ -6,12 +6,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import miu.edu.cs.cs525.final_project.bank.ApplicationBank;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 
 public class AddBankInterestAction implements ActionListener {
 
-	BankFrm parent;
-	public AddBankInterestAction(BankFrm parent) {
+	ApplicationBank parent;
+	public AddBankInterestAction(ApplicationBank parent) {
 		super();
 		this.parent = parent;
 	}

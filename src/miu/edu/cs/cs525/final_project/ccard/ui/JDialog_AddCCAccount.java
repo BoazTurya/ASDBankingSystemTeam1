@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import miu.edu.cs.cs525.final_project.ccard.ApplicationCreditCard;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.ui.AddAccountDialog;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameLabel;
@@ -32,10 +33,10 @@ public class JDialog_AddCCAccount extends AddAccountDialog
 	JTextField JTextField_CCNR = new FrameTextField();
 	JTextField JTextField_ExpDate = new FrameTextField();
 
-	private CardFrm parentFrame;
+	private ApplicationCreditCard parentFrame;
 
 	//}}
-	public JDialog_AddCCAccount(CardFrm parent)
+	public JDialog_AddCCAccount(ApplicationCreditCard parent)
 	{
 		super(parent);
 		parentFrame = parent;
