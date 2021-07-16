@@ -133,8 +133,9 @@ public class ApplicationCreditCard extends Form
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 			if (selection >=0){
 				String accnr = (String)getModel().getValueAt(selection, 0);
-				Account acct = getCreditAccountService().getAccount(accnr);
 				JDialogGenBill billFrm = new JDialogGenBill((ApplicationCreditCard)thisFrame, accnr);
+				billFrm.show();
+				populateModel();
 			}
 		}
 	}
