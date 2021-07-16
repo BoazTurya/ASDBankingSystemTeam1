@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import miu.edu.cs.cs525.final_project.bank.ApplicationBank;
 import miu.edu.cs.cs525.final_project.bank.ui.JDialog_AddPAcc.JButtonOK_ActionPerformed;
 import miu.edu.cs.cs525.final_project.bank.ui.JDialog_AddPAcc.SymMouse;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
@@ -15,7 +16,7 @@ import miu.edu.cs.cs525.final_project.framework.ui.FrameTextField;
 
 
 public class JDialog_AddCompAcc extends AddAccountDialog{
-	private BankFrm parentFrame;
+	private ApplicationBank parentFrame;
 	FrameRadioButton JRadioButton_Chk = new FrameRadioButton("Checking");
 	FrameRadioButton JRadioButton_Sav = new FrameRadioButton("Saving");
 	FrameLabel JLabel7 = new FrameLabel("Acc Nr");
@@ -23,7 +24,7 @@ public class JDialog_AddCompAcc extends AddAccountDialog{
 	FrameTextField JTextField_ACNR = new FrameTextField();
 	FrameTextField JTextField_NoOfEmp = new FrameTextField();
 
-	public JDialog_AddCompAcc(BankFrm parent){
+	public JDialog_AddCompAcc(ApplicationBank parent){
 		super(parent);
 		parentFrame=parent;
 		setTitle("Add company account");
@@ -62,31 +63,16 @@ public class JDialog_AddCompAcc extends AddAccountDialog{
 	}
 	class FormOKAddBankAccountAction implements ActionListener {
 		public void actionPerformed(ActionEvent event){
-			//parentFrame.setNewaccount(true);
-			parentFrame.setAccountnr(JTextField_ACNR.getText());
-			parentFrame.setClientName(JTextField_NAME.getText());
-			parentFrame.setStreet(JTextField_STR.getText());
-			parentFrame.setCity(JTextField_CT.getText());
-			parentFrame.setZip(JTextField_ZIP.getText());
-			parentFrame.setStateName(JTextField_ST.getText());
-			parentFrame.setAmountDeposit(0L);
-			parentFrame.setNumOfEmployees(Integer.parseInt(JTextField_NoOfEmp.getText()));
-			parentFrame.setAccountType(JRadioButton_Chk.isSelected()?"checking":"saving");
 			Account acct = parentFrame.getBankAccountService().getAccount(JTextField_ACNR.getText());
 			if(acct!=null) {
 				parentFrame.setAmountDeposit((long) acct.getBalance());
 			}else {
 				parentFrame.getBankAccountService().createOrganizationAccount(
-						parentFrame.getAccountnr(),
-						parentFrame.getClientName(),
-						parentFrame.getEmail(),
-						parentFrame.getStreet(),
-						parentFrame.getCity(),
-						parentFrame.getStateName(),
-						parentFrame.getZip(),
-						parentFrame.getNumOfEmployees(),
-						parentFrame.getAccountType());	
-				System.out.println(parentFrame.bankAccountService.getAllAccounts());
+						JTextField_ACNR.getText(),JTextField_NAME.getText(),
+						JTextField_Email.getText(),JTextField_STR.getText(),
+						JTextField_CT.getText(),JTextField_ST.getText(),
+						JTextField_ZIP.getText(),Integer.parseInt(JTextField_NoOfEmp.getText()),
+						JRadioButton_Chk.isSelected()?"checking":"saving");	
 			}
 			dispose();
 		}

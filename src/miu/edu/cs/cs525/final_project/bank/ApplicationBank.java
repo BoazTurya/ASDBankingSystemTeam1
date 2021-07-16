@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.bank.ui;
+package miu.edu.cs.cs525.final_project.bank;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,8 +8,16 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-import miu.edu.cs.cs525.final_project.bank.BankAccountService;
+import miu.edu.cs.cs525.final_project.bank.backend.BankAccount;
+import miu.edu.cs.cs525.final_project.bank.backend.BankAccountService;
+import miu.edu.cs.cs525.final_project.bank.backend.InterestStrategySaving;
+import miu.edu.cs.cs525.final_project.bank.ui.AddBankInterestAction;
+import miu.edu.cs.cs525.final_project.bank.ui.BankDepositDialog;
+import miu.edu.cs.cs525.final_project.bank.ui.BankWithdrawDialog;
+import miu.edu.cs.cs525.final_project.bank.ui.JDialog_AddCompAcc;
+import miu.edu.cs.cs525.final_project.bank.ui.JDialog_AddPAcc;
 import miu.edu.cs.cs525.final_project.framework.model.Account;
+import miu.edu.cs.cs525.final_project.framework.model.Person;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameButton;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
@@ -17,13 +25,13 @@ import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
 /**
  * A basic JFC based application.
  */
-public class BankFrm extends Form{
+public class ApplicationBank extends Form{
 	String accountnr, clientType;
-	BankAccountService bankAccountService;
+	public BankAccountService bankAccountService;
 	FrameButton JButton_PerAC = new FrameButton("Add personal account");
 	FrameButton JButton_CompAC = new FrameButton("Add company account");
 	FrameButton JButton_Addinterest= new FrameButton("Add interest");
-	public BankFrm() {
+	public ApplicationBank() {
 		buildGUI();
 	}
 
@@ -36,7 +44,7 @@ public class BankFrm extends Form{
 			catch (Exception e) { 
 			}
 			//Create a new instance of our application's frame, and make it visible.
-			(new BankFrm()).setVisible(true);
+			(new ApplicationBank()).setVisible(true);
 		} 
 		catch (Throwable t) {
 			t.printStackTrace();
@@ -55,16 +63,18 @@ public class BankFrm extends Form{
 		for (int i = rowCount - 1; i >= 0; i--) {
 		    model.removeRow(i);
 		}
-		for(Account a :accounts) {
-			
+		for(Account x :accounts) {
+			BankAccount a = (BankAccount)x;
+			String itype = a.getInterestStrategy().getClass().equals(InterestStrategySaving.class)?"saver":"checker";
+			String ctype = a.getCustomer().getClass().equals(Person.class)?"personal":"company";
 			columnIndex = 0;
 			rowdata[columnIndex++] = a.getAccountNumber();
 			rowdata[columnIndex++] = a.getCustomer().getName();
 			rowdata[columnIndex++] = a.getCustomer().getAddress().getCity();
-			rowdata[columnIndex++] = "cccc";
-			rowdata[columnIndex++] = "cccc";
+			rowdata[columnIndex++] = itype;
+			rowdata[columnIndex++] = ctype;
 			rowdata[columnIndex] = a.getBalance();
-			getModel().addRow(rowdata);maxrows++;
+			getModel().addRow(rowdata);
 			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
 		}
 		
@@ -72,25 +82,17 @@ public class BankFrm extends Form{
 
 	class JButtonPerAC_Action implements ActionListener{
 		public void actionPerformed(ActionEvent evt) {
-			JDialog_AddPAcc pac = new JDialog_AddPAcc((BankFrm) thisFrame);
-			pac.setBounds(450, 20, 300, 330);
-			pac.show();			
-			columnIndex = 0;
-			rowdata[columnIndex++] = accountnr;
-			rowdata[columnIndex++] = getClientName();
-			rowdata[columnIndex++] = getCity();
-			rowdata[columnIndex++] = "P";
-			rowdata[columnIndex++] = getAccountType();
-			rowdata[columnIndex] = "0";
-			maxrows++;
-			Account acct =	 getBankAccountService().getAccount(accountnr);
-			if(acct!=null) {
-				JOptionPane.showMessageDialog(thisFrame, "Account Already Exists","Account Already Exists",JOptionPane.WARNING_MESSAGE);
-				rowdata[columnIndex] = acct.getBalance();	
-			}
-			getModel().addRow(rowdata);
-			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+			JDialog_AddPAcc pac = new JDialog_AddPAcc((ApplicationBank) thisFrame);
+			pac.setBounds(450, 20, 300, 330);pac.show();			
+			populateModel();
 		}   
+	}
+	class JButtonCompAC_Action implements ActionListener{
+		public void actionPerformed(ActionEvent event){	
+			JDialog_AddCompAcc cac = new JDialog_AddCompAcc((ApplicationBank)thisFrame);
+			cac.setBounds(450, 20, 300, 330);cac.show();
+			populateModel();			
+		}
 	}
 	public class FormDepositButtonAction implements ActionListener{
 		@Override
@@ -98,12 +100,10 @@ public class BankFrm extends Form{
 			int selection = JTable1.getSelectionModel().getMinSelectionIndex();
 			if (selection >=0){
 				String accnr = (String)getModel().getValueAt(selection, 0);
-				BankDepositDialog dep = new BankDepositDialog((BankFrm) thisFrame, accnr);
+				BankDepositDialog dep = new BankDepositDialog((ApplicationBank) thisFrame, accnr);
 				dep.setBounds(430, 15, 275, 140);dep.show();
-				
-				double newamount = getBankAccountService().getAccount(accnr).getBalance();
-				//populateModel();
-				getModel().setValueAt(String.valueOf(newamount),selection, 5);
+							
+				populateModel();
 			}
 		}
 	}
@@ -114,7 +114,7 @@ public class BankFrm extends Form{
 			if (selection >=0){
 				String accnr = (String)getModel().getValueAt(selection, 0);
 				
-				TransactionDialog wd = new BankWithdrawDialog((BankFrm)thisFrame, accnr);  
+				TransactionDialog wd = new BankWithdrawDialog((ApplicationBank)thisFrame, accnr);  
 				wd.setBounds(430, 15, 275, 140); wd.show();
 		
 				double newamount=  getBankAccountService().getAccount(accnr).getBalance();
@@ -125,21 +125,7 @@ public class BankFrm extends Form{
 			}
 		}
 	}
-	class JButtonCompAC_Action implements ActionListener{
-		public void actionPerformed(ActionEvent event){	
-			JDialog_AddCompAcc cac = new JDialog_AddCompAcc((BankFrm)thisFrame);
-			cac.setBounds(450, 20, 300, 330);cac.show();
-			columnIndex = 0;
-			rowdata[columnIndex++] = accountnr;
-			rowdata[columnIndex++] = getClientName();
-			rowdata[columnIndex++] = getCity();
-			rowdata[columnIndex++] = "C";
-			rowdata[columnIndex++] = getAccountType();
-			rowdata[columnIndex] = "0";
-			getModel().addRow(rowdata);
-			JTable1.getSelectionModel().setAnchorSelectionIndex(-1);			
-		}
-	}
+
 	public String getAccountnr() {
 		return accountnr;
 	}

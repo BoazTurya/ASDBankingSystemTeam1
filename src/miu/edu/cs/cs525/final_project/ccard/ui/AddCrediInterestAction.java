@@ -6,12 +6,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import miu.edu.cs.cs525.final_project.ccard.ApplicationCreditCard;
 import miu.edu.cs.cs525.final_project.framework.ui.Form;
 
 public class AddCrediInterestAction implements ActionListener {
 
-	CardFrm parent;
-	public AddCrediInterestAction(CardFrm parent) {
+	ApplicationCreditCard parent;
+	public AddCrediInterestAction(ApplicationCreditCard parent) {
 		super();
 		parent = parent;
 	}

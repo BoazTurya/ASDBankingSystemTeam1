@@ -3,14 +3,15 @@ package miu.edu.cs.cs525.final_project.bank.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import miu.edu.cs.cs525.final_project.bank.ApplicationBank;
 import miu.edu.cs.cs525.final_project.framework.ui.TransactionDialog;
 
 public class OKBankButtonWithdrawAction implements ActionListener {
 	
 	TransactionDialog depositDialog;
-	BankFrm parentFrame;
+	ApplicationBank parentFrame;
 
-	public OKBankButtonWithdrawAction(BankFrm parentFrame,TransactionDialog depositDialog) {
+	public OKBankButtonWithdrawAction(ApplicationBank parentFrame,TransactionDialog depositDialog) {
 		this.depositDialog = depositDialog;
 		this.parentFrame = parentFrame;
 	}
