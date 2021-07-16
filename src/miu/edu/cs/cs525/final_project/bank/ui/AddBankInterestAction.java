@@ -24,7 +24,7 @@ public class AddBankInterestAction implements ActionListener {
 		 * to do
 		 */
 		parent.getBankAccountService().calculateInterest();
-		parent.populateTable();
+		parent.populateModel();
 	}
 	
 	

@@ -19,7 +19,6 @@ import miu.edu.cs.cs525.final_project.framework.model.Account;
 import miu.edu.cs.cs525.final_project.framework.ui.AddAccountDialog;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameLabel;
 import miu.edu.cs.cs525.final_project.framework.ui.FrameTextField;
-import miu.edu.cs.cs525.final_project.test.ccard.CreditAccount;
 
 public class JDialog_AddCCAccount extends AddAccountDialog
 {

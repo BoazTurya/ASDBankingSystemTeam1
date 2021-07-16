@@ -3,15 +3,12 @@ package miu.edu.cs.cs525.final_project.ccard.ui;
 		A basic implementation of the JDialog class.
 */
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
-import miu.edu.cs.cs525.final_project.bank.ui.BankFrm;
 
 public class JDialogGenBill extends JDialog{
     String billstring;

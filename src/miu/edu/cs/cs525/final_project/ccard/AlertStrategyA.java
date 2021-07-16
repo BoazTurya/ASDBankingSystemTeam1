@@ -1,4 +1,4 @@
-package miu.edu.cs.cs525.final_project.test.ccard;
+package miu.edu.cs.cs525.final_project.ccard;
 
 import miu.edu.cs.cs525.final_project.framework.strategy.AlertStrategy;
 
